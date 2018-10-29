@@ -12,8 +12,34 @@ public class TextTransformer {
     }
 
     public String transform(String text){
-        // of course normally it would to something based on transforms
-        return text.toLowerCase();
+        for(String transform : transforms) {
+            if(transform.equals("inverse"))
+                text = inverse(text);
+            //tu inne opcje
+        }
+        
+        return text;
+    }
+    
+    public String inverse(String text) {
+        String reverse = reverse(text);
+        String inverse = reverse.toLowerCase();
+        
+        for(int i = 0; i < text.length(); i++) {
+            char c = inverse.charAt(i);
+            if(Character.isUpperCase(text.charAt(i))) {
+                StringBuilder temp = new StringBuilder(inverse);
+                temp.setCharAt(i, Character.toUpperCase(inverse.charAt(i)));
+                inverse = temp.toString();
+            }
+                        
+        }
+        
+        return inverse;
+    }
+    
+    private String reverse(String text) {
+        return new StringBuilder(text).reverse().toString();
     }
     
 }
