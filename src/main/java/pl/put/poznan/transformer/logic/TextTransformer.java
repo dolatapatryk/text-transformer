@@ -26,13 +26,11 @@ public class TextTransformer {
         String inverse = reverse.toLowerCase();
         
         for(int i = 0; i < text.length(); i++) {
-            char c = inverse.charAt(i);
             if(Character.isUpperCase(text.charAt(i))) {
                 StringBuilder temp = new StringBuilder(inverse);
                 temp.setCharAt(i, Character.toUpperCase(inverse.charAt(i)));
                 inverse = temp.toString();
-            }
-                        
+            }              
         }
         
         return inverse;
