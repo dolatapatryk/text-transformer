@@ -1,8 +1,7 @@
 package pl.put.poznan.transformer.logic;
 
-/**
- * This is just an example to show that the logic should be outside the REST service.
- */
+import pl.put.poznan.transformer.utils.Transformation;
+
 public class TextTransformer {
 
     private final String[] transforms;
@@ -10,10 +9,24 @@ public class TextTransformer {
     public TextTransformer(String[] transforms){
         this.transforms = transforms;
     }
-
+    /**
+     * Głowna metoda transformująca, bierze każdą transformacje po kolei, więc kolejność
+     * transformacji w requescie ma znaczenie!!
+     * @param text
+     * @return 
+     */
     public String transform(String text){
-        // of course normally it would to something based on transforms
-        return text.toLowerCase();
+        for(String transform : transforms) {
+            if(transform.equals("inverse"))
+                text = Transformation.inverse(text);
+            if(transform.equals("upper"))
+                text = text.toUpperCase();
+            if(transform.equals("lower"))
+                text = text.toLowerCase();
+            //tu inne opcje
+        }
+        
+        return text;
     }
     
 }
