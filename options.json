@@ -1,0 +1,18 @@
+[
+    {
+        "name": "inverse",
+        "description": "pozwala odwrócić tekst i zachować wielkość liter na odpowiednich pozycjach"
+    },
+    {
+        "name": "upper",
+        "description": "pozwala na zamiane całego tekstu do wielkich liter"
+    },
+    {
+        "name": "lower",
+        "description": "pozwala na zamiane całego tekstu do małych liter"
+    },
+    {
+        "name": "capitalize",
+        "description": "pozwala zamienić każdą pierwszą literę w słowie na wielką"
+    }
+]

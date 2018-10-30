@@ -1,9 +1,7 @@
 package pl.put.poznan.transformer.rest;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import pl.put.poznan.transformer.logic.TextTransformer;
 
 import java.util.Arrays;
 import pl.put.poznan.transformer.logic.TextModel;
@@ -19,13 +17,11 @@ public class TextTransformerController {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public String get(@PathVariable String text,
-                              @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
+                              @RequestParam(value="transforms", defaultValue="upper") String[] transforms) {
 
-        // log the parameters
         logger.debug(text);
         logger.debug(Arrays.toString(transforms));
 
-        // do the transformation, you should run your logic here, below just a silly example
         TextTransformer transformer = new TextTransformer(transforms);
         TextModel result = new TextModel();
         
@@ -38,12 +34,10 @@ public class TextTransformerController {
     public String post(@PathVariable String text,
                       @RequestBody String[] transforms) {
 
-        // log the parameters
         logger.debug(text);
         logger.debug(Arrays.toString(transforms));
         
 
-        // do the transformation, you should run your logic here, below just a silly example
         TextTransformer transformer = new TextTransformer(transforms);
         return transformer.transform(text);
     }
