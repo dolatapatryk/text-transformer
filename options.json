@@ -14,5 +14,25 @@
     {
         "name": "capitalize",
         "description": "pozwala zamienić każdą pierwszą literę w słowie na wielką"
+    },
+    {
+        "name": "numberToText",
+        "description": "pozwala zamieniać liczby na tekst w języku polskim"
+    },
+    {
+        "name": "wordToAbbreviation",
+        "description": "pozwala zamienić predefiniowane słowa na skróty"
+    },
+    {
+        "name": "abbreviationToWord",
+        "description": "pozwala rozwijać wybrane skróty do pełnych postaci"
+    },
+    {
+        "name": "textToLatex",
+        "description": "pozwala przekstałcić tekst do formatu wspieranego przez latex"
+    },
+    {
+        "name": "eliminate",
+        "description": "pozwala eliminować powtarzające się wyrazy w bezpośrednim sąsiedztwie"
     }
 ]
