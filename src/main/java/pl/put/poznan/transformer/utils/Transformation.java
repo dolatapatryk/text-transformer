@@ -1,11 +1,15 @@
 package pl.put.poznan.transformer.utils;
 
+/**
+ * Klasa poasiadająca metody transformacji na tekście
+ * @author patryk, marcel, artur, dominik
+ */
 public class Transformation {
     
     /**
      * Metoda do odwracania tekstu z zachowaniem wielkości liter na odpowiednich pozycjach
-     * @param text
-     * @return 
+     * @param text oryginalny tekst
+     * @return odwrócony tekst z zachowanie wielkości liter na pozycjach
      */
     public static String inverse(String text) {
         String reverse = reverse(text);
@@ -17,8 +21,8 @@ public class Transformation {
     
     /**
      * Metoda do odwracania tekstu
-     * @param text - oryginalny tekst
-     * @return 
+     * @param text oryginalny tekst
+     * @return odwrócony tekst
      */
     private static String reverse(String text) {
         return new StringBuilder(text).reverse().toString();
@@ -26,9 +30,9 @@ public class Transformation {
     
     /**
      * Metoda do zachowania wielkości liter na konkretnych pozycjach
-     * @param src - tekst z oryginalna wielkością liter
-     * @param dest - przetworzony wczesniej tekst, w którym chcemy zachowac wielkosc liter ze źródła
-     * @return 
+     * @param src tekst z oryginalna wielkością liter
+     * @param dest przetworzony wczesniej tekst, w którym chcemy zachowac wielkosc liter ze źródła
+     * @return przetworzony tekst z zachowaniem wielkości liter ze źródła
      */
     private static String keepLettersSize(String src, String dest) {
         dest = dest.toLowerCase();
@@ -45,8 +49,8 @@ public class Transformation {
     
     /**
      * Metoda rozpoznająca liczby i zapisująca je za pomocą słów
-     * @param src - oryginalny tekst
-     * @return 
+     * @param src oryginalny tekst
+     * @return tekst z liczbami zapisanymi jako słowa
      */
     public static String numberToText(String src) {
         StringBuilder dest=new StringBuilder("");
@@ -64,7 +68,7 @@ public class Transformation {
                 if(number.length() > 0 && i + 1 < src.length() && src.charAt(i) == ',' && Character.isDigit(src.charAt(i+1)) && !fraction) {
                     if(Integer.parseInt(number.toString()) != 0) {
                         dest.append(convertNum(Integer.parseInt(number.toString()), newSent, fraction, number.length()));
-                        dest.append(" i");
+                        dest.append(" i ");
                     }
                     fraction = true;
                     num = false;
@@ -105,11 +109,11 @@ public class Transformation {
     
     /**
      * Metoda konwertująca liczbę na tekst
-     * @param number - liczba poddawana konwersji na tekst
-     * @param newSentence - zmienna logiczna przechowująca informację o tym, czy liczba znajduje się na początku zdania
-     * @param fraction - zmienna logiczna przechowująca informację o tym, czy liczba jest częścią ułamkową
-     * @param length - długość liczby w zapisie dziesiętnym - kluczowe przy części ułamkowej
-     * @return 
+     * @param number liczba poddawana konwersji na tekst
+     * @param newSentence zmienna logiczna przechowująca informację o tym, czy liczba znajduje się na początku zdania
+     * @param fraction zmienna logiczna przechowująca informację o tym, czy liczba jest częścią ułamkową
+     * @param length długość liczby w zapisie dziesiętnym - kluczowe przy części ułamkowej
+     * @return tekst reprezentujący podaną liczbę
      */
     private static String convertNum(Integer number, Boolean newSentence, Boolean fraction, Integer length) {
         String zaduzyulamek = "!za duża ilość cyfr po przecinku! ";
