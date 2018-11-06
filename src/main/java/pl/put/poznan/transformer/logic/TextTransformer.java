@@ -25,6 +25,10 @@ public class TextTransformer {
                 text = text.toUpperCase();
             if(transform.equals("lower"))
                 text = text.toLowerCase();
+            if(transform.equals("abbreviationToWord"))
+                text = Transformation.abbreviationToWord(text);
+            if(transform.equals("wordToAbbreviation"))
+                text = Transformation.wordToAbbreviation(text);
             //tu inne opcje
         }
         
