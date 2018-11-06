@@ -57,12 +57,15 @@ public class Transformation {
                 if(!num){
                     number=new StringBuilder("");
                     num = true;
+                    if(i - 1 > -1) if(!Character.isWhitespace(i-1)) dest.append(" ");
                 }
                 number.append(src.charAt(i));
             } else {
-                if(i + 1 < src.length() && src.charAt(i) == ',' && Character.isDigit(src.charAt(i+1)) && !fraction) {
-                    dest.append(convertNum(Integer.parseInt(number.toString()), newSent, fraction, number.length()));
-                    dest.append(" i ");
+                if(number.length() > 0 && i + 1 < src.length() && src.charAt(i) == ',' && Character.isDigit(src.charAt(i+1)) && !fraction) {
+                    if(Integer.parseInt(number.toString()) != 0) {
+                        dest.append(convertNum(Integer.parseInt(number.toString()), newSent, fraction, number.length()));
+                        dest.append(" i");
+                    }
                     fraction = true;
                     num = false;
                 } else {
@@ -71,7 +74,26 @@ public class Transformation {
                         dest.append(convertNum(Integer.parseInt(number.toString()), newSent, fraction, number.length()));
                         if(fraction) fraction = false;
                     }
-                    dest.append(src.charAt(i));
+                    if(i + 1 < src.length() && src.charAt(i) == '-' && Character.isDigit(src.charAt(i+1)) && !fraction){
+                        if(i - 1 > -1 && !newSent) {
+                            if(Character.isWhitespace(src.charAt(i-1))) dest.append("minus");
+                            else dest.append(" minus");
+                        }
+                        else if(i - 1 > -1 && newSent) { 
+                            if(Character.isWhitespace(src.charAt(i-1))) {
+                                dest.append("Minus");
+                                newSent = false;     
+                            } else if(src.charAt(i-1) == '.') {
+                                dest.append(" Minus");
+                                newSent = false;
+                            }
+                        } 
+                        if(i == 0) dest.append("Minus");
+                    } else {
+                        if(i - 1 > -1 && !Character.isWhitespace(src.charAt(i)) && src.charAt(i) != '.' && src.charAt(i) != ',')
+                            if(Character.isDigit(src.charAt(i-1))) dest.append(" ");
+                        dest.append(src.charAt(i));
+                    }
                     if(!Character.isWhitespace(src.charAt(i))) newSent = false;
                     if(src.charAt(i) == '.') newSent = true;
                 }
@@ -90,8 +112,10 @@ public class Transformation {
      * @return 
      */
     private static String convertNum(Integer number, Boolean newSentence, Boolean fraction, Integer length) {
-        String zaduzy = "!za duża ilość cyfr po przecinku! ";
-        if(length > 20 && fraction) return zaduzy;
+        String zaduzyulamek = "!za duża ilość cyfr po przecinku! ";
+        String zaduzaliczba = "!za duża liczba!";
+        if(length > 20 && fraction) return zaduzyulamek;
+        if(length > 21 && !fraction) return zaduzaliczba;
         
         String[] jednosci = { "", "jeden ", "dwa ", "trzy ", "cztery ",
                             "pięć ", "sześć ", "siedem ", "osiem ", "dziewięć ", };
@@ -179,6 +203,6 @@ public class Transformation {
         }
         if(newSentence) word.setCharAt(0, Character.toUpperCase(word.toString().charAt(0)));
         if(fraction) word.append(koncowkaUlamka.toString());
-        return word.toString().substring(0, word.toString().length()-1);
+        return word.toString().substring(0, word.toString().length()-1); //Zwraca stringa bez ostatniego znaku - spacji
     }
 }
