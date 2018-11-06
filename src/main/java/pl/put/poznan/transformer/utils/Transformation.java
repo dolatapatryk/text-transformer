@@ -48,7 +48,7 @@ public class Transformation {
      * @param src - oryginalny tekst
      * @return 
      */
-    public static String numberIntoWords(String src) {
+    public static String numberToText(String src) {
         StringBuilder dest=new StringBuilder("");
         StringBuilder number=new StringBuilder("");
         boolean num = false, newSent = true, fraction = false;
