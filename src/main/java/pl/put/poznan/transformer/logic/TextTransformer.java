@@ -17,6 +17,8 @@ public class TextTransformer {
      */
     public String transform(String text){
         for(String transform : transforms) {
+            if(transform.equals("numberToText"))
+                text = Transformation.numberToText(text);
             if(transform.equals("inverse"))
                 text = Transformation.inverse(text);
             if(transform.equals("upper"))
