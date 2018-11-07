@@ -1,10 +1,17 @@
 package pl.put.poznan.transformer.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Klasa poasiadająca metody transformacji na tekście
  * @author patryk, marcel, artur, dominik
  */
 public class Transformation {
+    
+
     
     /**
      * Metoda do odwracania tekstu z zachowaniem wielkości liter na odpowiednich pozycjach
@@ -46,6 +53,121 @@ public class Transformation {
         
         return dest;
     }
+    
+    /***
+     * Metoda znajdująca i rozwijająca skróty z tekście
+     * @param src - tekst w którym należy rozwinąć skróty
+     * @return 
+     */
+    public static String wordToAbbreviation(String src){
+        String[] words = src.split(" ");
+        
+        String newText = "";
+        String newWord = "";
+        for(String word: words){
+            newWord = expandShortcut(word);
+            newText += newWord;
+            if(newWord.equals(word)){
+                 System.out.println("equals: " + word);
+                 newText += " ";
+            } else {
+                System.out.println(newText + " notequals: " + word);
+            }
+        }
+
+        return newText;
+    }
+    
+    /***
+     * Metoda znajdująca i zamieniająca słowa na skróty
+     * @param src - tekst w którym należy znaleźć i zamienić wyrazy na skróty
+     * @return 
+     */
+    public static String abbreviationToWord(String src){
+        List<String> sentences = new ArrayList<String>();
+        sentences.add("między innymi");
+        sentences.add("na przykład");
+        sentences.add("i tym podobne");
+        sentences.add("i tak dalej");
+        
+        for(String sentence: sentences){
+            if(src.toLowerCase().contains(sentence)){
+                src = src.replace(sentence, createShortcut(sentence));
+            }
+        }
+       
+        return src;
+    }
+    
+    /***
+     * Metoda zwraca rozwinięty skrót na podstawie podanego skrótu
+     * @param shortcut - skrót do rozwinięcia
+     * @return 
+     */
+    public static String expandShortcut(String shortcut){
+        Map<String, String> shortcuts = new HashMap<String, String>();
+        shortcuts.put("prof", "profesor");
+        shortcuts.put("np", "na przykład");
+        shortcuts.put("dr", "doktor");
+        shortcuts.put("itd", "i tak dalej");
+        shortcuts.put("itp", "i tym podobne");
+        
+        String expanded = shortcut;
+        
+
+        if(shortcut.contains(".")){
+            shortcut = shortcut.replace(".", "");
+        }
+        if(shortcuts.containsKey(shortcut.toLowerCase())){
+            expanded = shortcuts.get(shortcut.toLowerCase());
+            String[] words = expanded.split(" ");
+            expanded = "";
+            String word;
+            
+            for(int i = 0; i < shortcut.length(); i++){
+                if(Character.isUpperCase(shortcut.charAt(i))){
+                    if(i >= words.length){
+                        continue;
+                    }
+                    
+                    word = words[i];
+                    expanded += word.substring(0, 1).toUpperCase() + word.substring(1);
+                    expanded += " ";
+                } else {
+                    if(i >= words.length){
+                        continue;
+                    }
+                    expanded += words[i];   
+                    expanded += " ";
+                }
+            }
+        }
+        return expanded;
+    }
+    
+    /***
+     * Metoda zwraca skrót na podstawie podanego wyrażenia 
+     * @param sentence - wyrażenie do zwinięcia 
+     * @return 
+     */
+    public static String createShortcut(String sentence){
+        Map<String, String> sentences = new HashMap<String, String>();
+        sentences.put("między innymi", "m.in.");
+        sentences.put("na przykład", "np.");
+        sentences.put("i tym podobne", "itp.");
+        sentences.put("i tak dalej", "itd.");
+        
+        String shorted = sentence;
+        
+        if(sentences.containsKey(sentence)){
+            shorted = sentences.get(sentence);
+        }
+
+        return shorted;
+    }
+    
+    
+    
     
     /**
      * Metoda rozpoznająca liczby i zapisująca je za pomocą słów
