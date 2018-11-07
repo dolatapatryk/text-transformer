@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Klasa poasiadająca metody transformacji na tekście
@@ -11,7 +13,7 @@ import java.util.Map;
  */
 public class Transformation {
     
-
+    private static final Logger logger = LoggerFactory.getLogger(Transformation.class);
     
     /**
      * Metoda do odwracania tekstu z zachowaniem wielkości liter na odpowiednich pozycjach
@@ -55,23 +57,27 @@ public class Transformation {
     }
     
     /***
-     * Metoda znajdująca i rozwijająca skróty z tekście
+     * Metoda znajdująca i rozwijająca skróty w tekście
      * @param src - tekst w którym należy rozwinąć skróty
-     * @return 
+     * @return tekst z rozwiniętymi skrótami
      */
-    public static String wordToAbbreviation(String src){
+    public static String abbreviationToWord(String src){
         String[] words = src.split(" ");
         
         String newText = "";
         String newWord = "";
-        for(String word: words){
-            newWord = expandShortcut(word);
+        for(int i = 0; i < words.length; i++){
+            if(i != words.length - 1)
+                newWord = expandShortcut(words[i], false);
+            else
+                newWord = expandShortcut(words[i], true);
             newText += newWord;
-            if(newWord.equals(word)){
-                 System.out.println("equals: " + word);
-                 newText += " ";
+            if(newWord.equals(words[i])){
+                 logger.debug("equals: " + words[i]);
+                 if(i != words.length - 1)
+                    newText += " ";
             } else {
-                System.out.println(newText + " notequals: " + word);
+                logger.debug(newText + " notequals: " + words[i]);
             }
         }
 
@@ -81,18 +87,20 @@ public class Transformation {
     /***
      * Metoda znajdująca i zamieniająca słowa na skróty
      * @param src - tekst w którym należy znaleźć i zamienić wyrazy na skróty
-     * @return 
+     * @return tekst ze słowami zwiniętymi w skróty
      */
-    public static String abbreviationToWord(String src){
+    public static String wordToAbbreviation(String src){
         List<String> sentences = new ArrayList<String>();
         sentences.add("między innymi");
         sentences.add("na przykład");
         sentences.add("i tym podobne");
         sentences.add("i tak dalej");
         
+        src = src.toLowerCase();
         for(String sentence: sentences){
             if(src.toLowerCase().contains(sentence)){
                 src = src.replace(sentence, createShortcut(sentence));
+                logger.debug("znaleziono: " + sentence);
             }
         }
        
@@ -102,9 +110,10 @@ public class Transformation {
     /***
      * Metoda zwraca rozwinięty skrót na podstawie podanego skrótu
      * @param shortcut - skrót do rozwinięcia
-     * @return 
+     * @param lastWord - flaga czy słowo jest ostatnie w zdaniu
+     * @return rozwinięty skrót
      */
-    public static String expandShortcut(String shortcut){
+    public static String expandShortcut(String shortcut, boolean lastWord){
         Map<String, String> shortcuts = new HashMap<String, String>();
         shortcuts.put("prof", "profesor");
         shortcuts.put("np", "na przykład");
@@ -129,16 +138,17 @@ public class Transformation {
                     if(i >= words.length){
                         continue;
                     }
-                    
                     word = words[i];
                     expanded += word.substring(0, 1).toUpperCase() + word.substring(1);
-                    expanded += " ";
+                    if(!lastWord)
+                        expanded += " ";
                 } else {
                     if(i >= words.length){
                         continue;
                     }
                     expanded += words[i];   
-                    expanded += " ";
+                    if(!lastWord)
+                        expanded += " ";
                 }
             }
         }
@@ -148,7 +158,7 @@ public class Transformation {
     /***
      * Metoda zwraca skrót na podstawie podanego wyrażenia 
      * @param sentence - wyrażenie do zwinięcia 
-     * @return 
+     * @return zwinięte wyrażenie
      */
     public static String createShortcut(String sentence){
         Map<String, String> sentences = new HashMap<String, String>();
@@ -165,9 +175,6 @@ public class Transformation {
 
         return shorted;
     }
-    
-    
-    
     
     /**
      * Metoda rozpoznająca liczby i zapisująca je za pomocą słów
