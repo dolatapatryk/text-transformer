@@ -7,6 +7,12 @@ import lombok.Data;
  */
 public @Data class OptionModel {
     
+    /**
+     * nazwa opcji
+     */
     private String name;
+    /**
+     * opis opcji
+     */
     private String description;
 }
