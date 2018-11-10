@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class Transformation {
     
     private static final Logger logger = LoggerFactory.getLogger(Transformation.class);
-    
+
     /**
      * Metoda do odwracania tekstu z zachowaniem wielkości liter na odpowiednich pozycjach
      * @param text oryginalny tekst
@@ -55,7 +55,21 @@ public class Transformation {
         
         return dest;
     }
-    
+
+    /**
+     * Metoda zamieniająca pierwszą literę w każdym wyrazie na wielką
+     * @param text - tekst wejsciowy
+     * @return tekst, w którym każde słowo zaczyna się wielką literą
+     */
+    public static String capitalize(String text){
+        String[] words = text.split(" ");
+        for (String w : words){
+            w = w.substring(0,1).toUpperCase() + w.substring(1);
+            text = text +" "+ w;
+        }
+        return text;
+    }
+
     /***
      * Metoda znajdująca i rozwijająca skróty w tekście
      * @param src - tekst w którym należy rozwinąć skróty
@@ -63,7 +77,7 @@ public class Transformation {
      */
     public static String abbreviationToWord(String src){
         String[] words = src.split(" ");
-        
+
         String newText = "";
         String newWord = "";
         for(int i = 0; i < words.length; i++){
@@ -83,7 +97,7 @@ public class Transformation {
 
         return newText;
     }
-    
+
     /***
      * Metoda znajdująca i zamieniająca słowa na skróty
      * @param src - tekst w którym należy znaleźć i zamienić wyrazy na skróty
@@ -95,7 +109,7 @@ public class Transformation {
         sentences.add("na przykład");
         sentences.add("i tym podobne");
         sentences.add("i tak dalej");
-        
+
         src = src.toLowerCase();
         for(String sentence: sentences){
             if(src.toLowerCase().contains(sentence)){
@@ -103,10 +117,10 @@ public class Transformation {
                 logger.debug("znaleziono: " + sentence);
             }
         }
-       
+
         return src;
     }
-    
+
     /***
      * Metoda zwraca rozwinięty skrót na podstawie podanego skrótu
      * @param shortcut - skrót do rozwinięcia
@@ -120,9 +134,9 @@ public class Transformation {
         shortcuts.put("dr", "doktor");
         shortcuts.put("itd", "i tak dalej");
         shortcuts.put("itp", "i tym podobne");
-        
+
         String expanded = shortcut;
-        
+
 
         if(shortcut.contains(".")){
             shortcut = shortcut.replace(".", "");
@@ -132,7 +146,7 @@ public class Transformation {
             String[] words = expanded.split(" ");
             expanded = "";
             String word;
-            
+
             for(int i = 0; i < shortcut.length(); i++){
                 if(Character.isUpperCase(shortcut.charAt(i))){
                     if(i >= words.length){
@@ -146,7 +160,7 @@ public class Transformation {
                     if(i >= words.length){
                         continue;
                     }
-                    expanded += words[i];   
+                    expanded += words[i];
                     if(!lastWord)
                         expanded += " ";
                 }
@@ -154,10 +168,10 @@ public class Transformation {
         }
         return expanded;
     }
-    
+
     /***
-     * Metoda zwraca skrót na podstawie podanego wyrażenia 
-     * @param sentence - wyrażenie do zwinięcia 
+     * Metoda zwraca skrót na podstawie podanego wyrażenia
+     * @param sentence - wyrażenie do zwinięcia
      * @return zwinięte wyrażenie
      */
     public static String createShortcut(String sentence){
@@ -166,16 +180,16 @@ public class Transformation {
         sentences.put("na przykład", "np.");
         sentences.put("i tym podobne", "itp.");
         sentences.put("i tak dalej", "itd.");
-        
+
         String shorted = sentence;
-        
+
         if(sentences.containsKey(sentence)){
             shorted = sentences.get(sentence);
         }
 
         return shorted;
     }
-    
+
     /**
      * Metoda rozpoznająca liczby i zapisująca je za pomocą słów
      * @param src oryginalny tekst
@@ -212,15 +226,15 @@ public class Transformation {
                             if(Character.isWhitespace(src.charAt(i-1))) dest.append("minus");
                             else dest.append(" minus");
                         }
-                        else if(i - 1 > -1 && newSent) { 
+                        else if(i - 1 > -1 && newSent) {
                             if(Character.isWhitespace(src.charAt(i-1))) {
                                 dest.append("Minus");
-                                newSent = false;     
+                                newSent = false;
                             } else if(src.charAt(i-1) == '.') {
                                 dest.append(" Minus");
                                 newSent = false;
                             }
-                        } 
+                        }
                         if(i == 0) dest.append("Minus");
                     } else {
                         if(i - 1 > -1 && !Character.isWhitespace(src.charAt(i)) && src.charAt(i) != '.' && src.charAt(i) != ',')
@@ -235,7 +249,7 @@ public class Transformation {
         if(num) dest.append(convertNum(Integer.parseInt(number.toString()), newSent, fraction, number.length()));
         return dest.toString();
     }
-    
+
     /**
      * Metoda konwertująca liczbę na tekst
      * @param number liczba poddawana konwersji na tekst
@@ -249,10 +263,10 @@ public class Transformation {
         String zaduzaliczba = "!za duża liczba!";
         if(length > 20 && fraction) return zaduzyulamek;
         if(length > 21 && !fraction) return zaduzaliczba;
-        
+
         String[] jednosci = { "", "jeden ", "dwa ", "trzy ", "cztery ",
                             "pięć ", "sześć ", "siedem ", "osiem ", "dziewięć ", };
-        
+
         String[] ulamkowe = { "", "jedna ", "dwie ", "trzy ", "cztery ",
                             "pięć ", "sześć ", "siedem ", "osiem ", "dziewięć ", };
 
@@ -276,17 +290,17 @@ public class Transformation {
                             { "bilion ", "biliony ", "bilionów " },
                             { "biliard ", "biliardy ", "biliardów " },
                             { "trylion ", "tryliony ", "trylionów " }, };
-        
+
         String[] ulamki = { "dziesiąt", "setn", "tysięczn", "dziesięciotysięczn", "stutysięczn",
-                            "milionow", "dziesięciomilionow", "stumilionow", 
+                            "milionow", "dziesięciomilionow", "stumilionow",
                             "miliardow", "dziesięciomiliardow", "stumiliardow",
-                            "bilionow", "dziesięciobilionow", "stubilionow", 
-                            "biliardow", "dziesięciobiliardow", "stubiliardow", 
+                            "bilionow", "dziesięciobilionow", "stubilionow",
+                            "biliardow", "dziesięciobiliardow", "stubiliardow",
                             "trylionow", "dziesięciotrylionow", "stutrylionow", };
-        
+
         StringBuilder word=new StringBuilder("");
         StringBuilder koncowkaUlamka=new StringBuilder(ulamki[length-1]);
-        
+
         Integer j = 0/* jedności */, n = 0/* nastki */, d = 0/* dziesiątki */, s = 0/* setki */, g = 0/* grupy */, k = 0/* końcówki */;
 
         if (number == 0) {
@@ -305,7 +319,7 @@ public class Transformation {
                 if(j > 1 && j < 5 && d != 1) koncowkaUlamka.append("e ");
                 else koncowkaUlamka.append("ych ");
             }
-            
+
             if (d == 1 && j > 0) {// if zajmujący się nastkami
                 n = j;
                 d = 0;
@@ -318,17 +332,17 @@ public class Transformation {
                 k = 0;
                 if (s + d == 0 && g > 0) { // jeśli nie będzie dziesiątek ani setek, wtedy otrzymamy samą grupę
                     j = 0;
-                    word = new StringBuilder(grupy[(int) g][(int) k] + word.toString());                   
+                    word = new StringBuilder(grupy[(int) g][(int) k] + word.toString());
                 }
             } else if (j == 2 || j == 3 || j == 4) k = 1;
             else k = 2;
 
             // KONIEC KOŃCÓWEK -->
             if (s+d+n+j > 0) {
-                if(fraction && g == 0 && d != 1 && j == 2) 
-                    word = new StringBuilder(setki[(int) s] + dziesiatki[(int) d] + nastki[(int) n] 
+                if(fraction && g == 0 && d != 1 && j == 2)
+                    word = new StringBuilder(setki[(int) s] + dziesiatki[(int) d] + nastki[(int) n]
                         + ulamki[(int) j] + grupy[(int) g][(int) k] + word.toString());
-                else word = new StringBuilder(setki[(int) s] + dziesiatki[(int) d] + nastki[(int) n] 
+                else word = new StringBuilder(setki[(int) s] + dziesiatki[(int) d] + nastki[(int) n]
                         + jednosci[(int) j] + grupy[(int) g][(int) k] + word.toString());
             }
             number = number / 1000;

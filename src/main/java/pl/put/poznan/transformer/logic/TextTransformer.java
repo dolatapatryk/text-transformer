@@ -32,6 +32,8 @@ public class TextTransformer {
                 text = Transformation.numberToText(text);
             if(transform.equals("inverse"))
                 text = Transformation.inverse(text);
+            if(transform.equals("capitalize"))
+                text = Transformation.capitalize(text);
             if(transform.equals("upper"))
                 text = text.toUpperCase();
             if(transform.equals("lower"))
