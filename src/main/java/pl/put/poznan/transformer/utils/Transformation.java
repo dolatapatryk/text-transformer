@@ -63,6 +63,7 @@ public class Transformation {
      */
     public static String capitalize(String text){
         String[] words = text.split(" ");
+        text = "";
         for (String w : words){
             w = w.substring(0,1).toUpperCase() + w.substring(1);
             text = text +" "+ w;
