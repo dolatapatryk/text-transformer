@@ -1,19 +1,51 @@
 package pl.put.poznan.transformer.logic;
 
+import pl.put.poznan.transformer.utils.Transformation;
+
 /**
- * This is just an example to show that the logic should be outside the REST service.
+ * Klasa odpowiadająca za transformacje na tekście
+ * @author patryk, marcel, artur, dominik
  */
 public class TextTransformer {
 
+    /**
+     * tablica transformacji
+     */
     private final String[] transforms;
 
+    /**
+     * Konstruktor klasy, przyjmujący transformacje, których chce użytkownik
+     * @param transforms transformacje użytkownika
+     */
     public TextTransformer(String[] transforms){
         this.transforms = transforms;
     }
-
+    /**
+     * Głowna metoda transformująca, bierze każdą transformacje po kolei, więc kolejność
+     * transformacji w requescie ma znaczenie!!
+     * @param text tekst wprowadzony przez użytkownika
+     * @return ztransformowany tekst
+     */
     public String transform(String text){
-        // of course normally it would to something based on transforms
-        return text.toLowerCase();
+        for(String transform : transforms) {
+            if(transform.equals("numberToText"))
+                text = Transformation.numberToText(text);
+            if(transform.equals("inverse"))
+                text = Transformation.inverse(text);
+            if(transform.equals("capitalize"))
+                text = Transformation.capitalize(text);
+            if(transform.equals("upper"))
+                text = text.toUpperCase();
+            if(transform.equals("lower"))
+                text = text.toLowerCase();
+            if(transform.equals("abbreviationToWord"))
+                text = Transformation.abbreviationToWord(text);
+            if(transform.equals("wordToAbbreviation"))
+                text = Transformation.wordToAbbreviation(text);
+            //tu inne opcje
+        }
+        
+        return text;
     }
     
 }
