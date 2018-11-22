@@ -18,6 +18,11 @@ public class ResponseMessage {
     public static String nameTaken = "{\"status\":\"Ta nazwa jest już zajęta\"}";
     
     /**
+     * status, który informuje, że nie ma zdefiniowanej transformacji o takiej nazwie
+     */
+    public static String transformNotFound = "{\"status\":\"Nie ma zdefiniowanej transformacji o takiej nazwie\"}";
+    
+    /**
      * Metoda zmieniająca obiekt na obiekt Json
      * @param object obiekt do zamiany
      * @return obiekt w formacie Json

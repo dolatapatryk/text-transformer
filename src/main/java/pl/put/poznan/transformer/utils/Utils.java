@@ -15,10 +15,6 @@ import static pl.put.poznan.transformer.app.TextTransformerApplication.userTrans
 import pl.put.poznan.transformer.logic.OptionModel;
 import pl.put.poznan.transformer.logic.UserTransformModel;
 
-/**
- *
- * @author patrykdolata
- */
 public class Utils {
     
     private static final Logger logger = LoggerFactory.getLogger(Utils.class);

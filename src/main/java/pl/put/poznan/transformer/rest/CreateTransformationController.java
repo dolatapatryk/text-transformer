@@ -1,11 +1,9 @@
 package pl.put.poznan.transformer.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Optional;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,20 +18,14 @@ import pl.put.poznan.transformer.utils.Utils;
  * @author patrykdolata
  */
 @RestController
-@RequestMapping("/create_transformation")
+@RequestMapping("/create_transformation/")
 public class CreateTransformationController {
     
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CreateTransformationController.class);
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public String post(@RequestBody String input) {
-        ObjectMapper mapper = new ObjectMapper();
-        UserTransformModel userTransform = null;
-        try {
-            userTransform = mapper.readValue(input, UserTransformModel.class);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateTransformationController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        UserTransformModel userTransform = Utils.objectFromJson(input, UserTransformModel.class);
         
         logger.debug(userTransform.getName());
         logger.debug(Arrays.toString(userTransform.getTransforms()));
@@ -45,7 +37,27 @@ public class CreateTransformationController {
         
         userTransforms.add(userTransform);
         
-        logger.info("Utworzono własną transformacje o nazwie: {} i transformacjach: {}", userTransform.getName(),
+        logger.info("Utworzono własny ciąg transformacji o nazwie: {} i transformacjach: {}", userTransform.getName(),
+                userTransform.getTransforms());
+        
+        return ResponseMessage.ok;
+    }
+    
+    @RequestMapping(value = "{name}",method = RequestMethod.PUT, produces = "application/json")
+    public String put(@PathVariable String name, @RequestBody String input) {
+        String[] newTransforms = Utils.objectFromJson(input, String[].class);
+        
+        UserTransformModel userTransform = new UserTransformModel();
+        Optional<UserTransformModel> userTransformOpt = userTransforms.stream().
+                filter(t -> t.getName().equals(name)).findAny();
+        
+        if(userTransformOpt.isPresent())
+            userTransform = userTransformOpt.get();
+        else 
+            return ResponseMessage.transformNotFound;
+        
+        userTransform.setTransforms(newTransforms);
+        logger.info("Zaktualizowano ciąg transformacji o nazwie: {}, jej nowe transformacje to: {} ", userTransform.getName(),
                 userTransform.getTransforms());
         
         return ResponseMessage.ok;
