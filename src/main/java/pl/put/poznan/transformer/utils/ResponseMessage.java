@@ -13,7 +13,7 @@ public class ResponseMessage {
     public static String ok = "{\"status\":\"OK\"}";
     
     /**
-     * status używany przy tworzeniu własnej transformacji, informuje o tym, że nazwa jest już zajęta
+     * status używany przy tworzeniu własnego ciągu transfomacji, informuje o tym, że nazwa jest już zajęta
      */
     public static String nameTaken = "{\"status\":\"Ta nazwa jest już zajęta\"}";
     

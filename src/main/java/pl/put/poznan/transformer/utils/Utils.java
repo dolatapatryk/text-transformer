@@ -8,7 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static pl.put.poznan.transformer.app.TextTransformerApplication.userTransforms;
@@ -62,6 +65,29 @@ public class Utils {
         }
         
         return object;
+    }
+    
+    public static UserTransformModel getTransformWithGivenName(String name) {
+        Optional<UserTransformModel> userTransformOpt = userTransforms.stream().
+                filter(t -> t.getName().equals(name)).findAny();
+        
+        return userTransformOpt.get();
+    }
+    
+    /**
+     * Sprawdza czy transformacja o podanej nazwie jest ciągiem transformacji zdefiniowanym przez użytkownika
+     * @param name nazwa transformacji
+     * @return true - jeśli istnieję transformacja zdefiniowana przez użytkownika o takiej nazwie, false - w przeciwnym wypadku
+     */
+    public static boolean checkUserTransforms(String name) {
+        List<String> userTransformsNames = userTransforms.stream().map(t -> t.getName())
+                .collect(Collectors.toList());
+        for(String transform : userTransformsNames) {
+            if(transform.equals(name))
+                return true;
+        }
+        
+        return false;
     }
     
 }
