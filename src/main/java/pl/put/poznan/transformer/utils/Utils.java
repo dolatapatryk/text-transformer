@@ -1,9 +1,11 @@
 package pl.put.poznan.transformer.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
@@ -52,4 +54,18 @@ public class Utils {
         
         return options;
     }
+    
+    public static <T> T objectFromJson(String body, Class<T> type) {
+        ObjectMapper mapper = new ObjectMapper();
+        T object = null;
+        
+        try {
+            object = mapper.readValue(body, type);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return object;
+    }
+    
 }
