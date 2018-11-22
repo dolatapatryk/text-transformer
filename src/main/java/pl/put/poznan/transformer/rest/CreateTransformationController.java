@@ -20,9 +20,9 @@ import pl.put.poznan.transformer.utils.ResponseMessage;
  */
 @RestController
 @RequestMapping("/create_transformation")
-public class CreateTransforController {
+public class CreateTransformationController {
     
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CreateTransforController.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CreateTransformationController.class);
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public String post(@RequestBody String input) {
@@ -31,7 +31,7 @@ public class CreateTransforController {
         try {
             userTransform = mapper.readValue(input, UserTransformModel.class);
         } catch (IOException ex) {
-            Logger.getLogger(CreateTransforController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CreateTransformationController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         logger.debug(userTransform.getName());
