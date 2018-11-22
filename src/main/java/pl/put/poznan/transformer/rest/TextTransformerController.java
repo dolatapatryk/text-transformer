@@ -25,7 +25,7 @@ public class TextTransformerController {
         TextTransformer transformer = new TextTransformer(transforms);
         TextModel result = new TextModel();
         
-        result.setText(transformer.transform(text));
+        result.setText(transformer.superTransform(text));
         
         return ResponseMessage.objectToJson(result);
     }
@@ -39,7 +39,7 @@ public class TextTransformerController {
         
 
         TextTransformer transformer = new TextTransformer(transforms);
-        return transformer.transform(text);
+        return transformer.superTransform(text);
     }
 
 
