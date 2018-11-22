@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static pl.put.poznan.transformer.app.TextTransformerApplication.userTransforms;
 import pl.put.poznan.transformer.logic.UserTransformModel;
 import pl.put.poznan.transformer.utils.ResponseMessage;
+import pl.put.poznan.transformer.utils.Utils;
 
 /**
  *
@@ -36,6 +37,11 @@ public class CreateTransformationController {
         
         logger.debug(userTransform.getName());
         logger.debug(Arrays.toString(userTransform.getTransforms()));
+        
+        if(Utils.checkIfNameIsTaken(userTransform.getName())) {
+            logger.info("Nazwa jest już zajęta");
+            return ResponseMessage.nameTaken;
+        }
         
         userTransforms.add(userTransform);
         

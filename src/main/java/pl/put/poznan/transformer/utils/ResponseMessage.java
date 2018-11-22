@@ -13,6 +13,11 @@ public class ResponseMessage {
     public static String ok = "{\"status\":\"OK\"}";
     
     /**
+     * status używany przy tworzeniu własnej transformacji, informuje o tym, że nazwa jest już zajęta
+     */
+    public static String nameTaken = "{\"status\":\"Ta nazwa jest już zajęta\"}";
+    
+    /**
      * Metoda zmieniająca obiekt na obiekt Json
      * @param object obiekt do zamiany
      * @return obiekt w formacie Json
