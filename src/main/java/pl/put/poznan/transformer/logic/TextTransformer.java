@@ -18,6 +18,7 @@ public class TextTransformer {
      * tablica transformacji
      */
     @Getter private final String[] transforms;
+    
 
     /**
      * Konstruktor klasy, przyjmujący transformacje, których chce użytkownik

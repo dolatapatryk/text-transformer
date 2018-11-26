@@ -1,132 +1,113 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.put.poznan.transformer.utils;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author patryk
+ * @author patryk, marcel, dominik, artur
  */
 public class TransformationTest {
     
     public TransformationTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
+    /**
+     * Test transformacji "upper", z klasy Transformation.
+     */
+    @Test
+    public void testUpper() {
+        String text = "Projekt z inżynierii oprogramowania";
+        String expResult = "PROJEKT Z INŻYNIERII OPROGRAMOWANIA";
+        String result = Transformation.upper(text);
+        assertEquals(expResult, result);
     }
     
-    @AfterClass
-    public static void tearDownClass() {
-    }
     
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+    @Test
+    public void testLower() {
+        String text = "PROJEKT Z INŻYNIERII OPROGRAMOWANIA";
+        String expResult = "projekt z inżynierii oprogramowania";
+        String result = Transformation.lower(text);
+        assertEquals(expResult, result);
     }
 
     /**
-     * Test of inverse method, of class Transformation.
+     * Test transformacji "inverse", z klasy Transformation.
      */
     @Test
     public void testInverse() {
-        System.out.println("inverse");
         String text = "MirEk";
         String expResult = "KerIm";
         String result = Transformation.inverse(text);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
-     * Test of capitalize method, of class Transformation.
+     * Test transformacji "capitalize", z klasy Transformation.
      */
     @Test
     public void testCapitalize() {
-        System.out.println("capitalize");
         String text = "mam fajne buty";
         String expResult = "Mam Fajne Buty";
         String result = Transformation.capitalize(text);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
-     * Test of abbreviationToWord method, of class Transformation.
+     * Test transformacji "abbreviationToWord", z klasy Transformation.
      */
     @Test
     public void testAbbreviationToWord() {
-        System.out.println("abbreviationToWord");
-        String src = "";
-        String expResult = "";
+        String src = "Pan Prof. spóźnił się na zajęcia";
+        String expResult = "Pan Profesor spóźnił się na zajęcia";
         String result = Transformation.abbreviationToWord(src);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
-     * Test of wordToAbbreviation method, of class Transformation.
+     * Test transformacji "wordToAbbreviation", z klasy Transformation.
      */
     @Test
     public void testWordToAbbreviation() {
-        System.out.println("wordToAbbreviation");
-        String src = "";
-        String expResult = "";
+        String src = "Pieczywo to na przykład chleb i bułki";
+        String expResult = "Pieczywo to np. chleb i bułki";
         String result = Transformation.wordToAbbreviation(src);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
-     * Test of expandShortcut method, of class Transformation.
+     * Test metody rozwijającej skróty, z klasy Transformation.
      */
     @Test
     public void testExpandShortcut() {
-        System.out.println("expandShortcut");
-        String shortcut = "";
+        String shortcut = "itp.";
         boolean lastWord = false;
-        String expResult = "";
+        String expResult = "i tym podobne ";
         String result = Transformation.expandShortcut(shortcut, lastWord);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
-     * Test of createShortcut method, of class Transformation.
+     * Test metody zwijającej słowo do skrótu, z klasy Transformation.
      */
     @Test
     public void testCreateShortcut() {
-        System.out.println("createShortcut");
-        String sentence = "";
-        String expResult = "";
+        String sentence = "między innymi";
+        String expResult = "m.in.";
         String result = Transformation.createShortcut(sentence);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
-     * Test of numberToText method, of class Transformation.
+     * Test transformacji "numberToText", z klasy Transformation.
      */
     @Test
     public void testNumberToText() {
-        System.out.println("numberToText");
-        String src = "";
-        String expResult = "";
+        String src = "Wpłać -12,67 złotych";
+        String expResult = "Wpłać minus dwanaście i sześćdziesiąt siedem setnych złotych";
         String result = Transformation.numberToText(src);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
     
 }

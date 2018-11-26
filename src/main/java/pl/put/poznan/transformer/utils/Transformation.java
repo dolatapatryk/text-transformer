@@ -135,7 +135,6 @@ public class Transformation {
         sentences.add("i tym podobne");
         sentences.add("i tak dalej");
 
-        src = src.toLowerCase();
         for(String sentence: sentences){
             if(src.toLowerCase().contains(sentence)){
                 src = src.replace(sentence, createShortcut(sentence));
@@ -208,7 +207,7 @@ public class Transformation {
 
         String shorted = sentence;
 
-        if(sentences.containsKey(sentence)){
+        if(sentences.containsKey(sentence.toLowerCase())){
             shorted = sentences.get(sentence);
         }
 
