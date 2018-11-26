@@ -18,6 +18,7 @@ public class TextTransformer {
      * tablica transformacji
      */
     @Getter private final String[] transforms;
+    
 
     /**
      * Konstruktor klasy, przyjmujący transformacje, których chce użytkownik
@@ -41,9 +42,9 @@ public class TextTransformer {
             if(transform.equals("capitalize"))
                 text = Transformation.capitalize(text);
             if(transform.equals("upper"))
-                text = text.toUpperCase();
+                text = Transformation.upper(text);
             if(transform.equals("lower"))
-                text = text.toLowerCase();
+                text = Transformation.lower(text);
             if(transform.equals("abbreviationToWord"))
                 text = Transformation.abbreviationToWord(text);
             if(transform.equals("wordToAbbreviation"))

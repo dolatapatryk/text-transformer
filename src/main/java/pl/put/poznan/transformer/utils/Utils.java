@@ -21,7 +21,12 @@ import pl.put.poznan.transformer.logic.UserTransformModel;
 public class Utils {
     
     private static final Logger logger = LoggerFactory.getLogger(Utils.class);
-
+    
+    /**
+     * Metoda sprawdzająca czy nazwa danej transformacji jest już zdefiniowana
+     * @param name  nasza nazwa
+     * @return true - jesli nazwa zajeta, false w przeciwnym wypadku
+     */
     public static boolean checkIfNameIsTaken(String name) {
         OptionModel[] options = loadOptions();
         
