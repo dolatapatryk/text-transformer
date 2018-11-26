@@ -14,6 +14,24 @@ import org.slf4j.LoggerFactory;
 public class Transformation {
     
     private static final Logger logger = LoggerFactory.getLogger(Transformation.class);
+    
+    /**
+     * Metoda zmieniająca wszystkie litery w tekście na wielkie
+     * @param text oryginalny tekst
+     * @return tekst, który wszystkie litery ma wielkie
+     */
+    public static String upper(String text) {
+        return text.toUpperCase();
+    }
+    
+    /**
+     * Metoda zmieniająca wszystkie litery w tekście na małe
+     * @param text oryginalny tekst
+     * @return tekst, który wszystie litery ma małe
+     */
+    public static String lower(String text) {
+        return text.toLowerCase();
+    }
 
     /**
      * Metoda do odwracania tekstu z zachowaniem wielkości liter na odpowiednich pozycjach
@@ -64,10 +82,16 @@ public class Transformation {
     public static String capitalize(String text){
         String[] words = text.split(" ");
         text = "";
-        for (String w : words){
-            w = w.substring(0,1).toUpperCase() + w.substring(1);
-            text = text +" "+ w;
+   
+        for(int i = 0; i < words.length; i++) {
+            words[i] = words[i].substring(0,1).toUpperCase() + words[i].substring(1);
+            
+            if(i == 0)
+                text = text + words[i];
+            else
+                text = text + " " + words[i];
         }
+        
         return text;
     }
 
