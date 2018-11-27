@@ -110,4 +110,15 @@ public class TransformationTest {
         assertEquals(expResult, result);
     }
     
+    /**
+     * Test transformacji "addDot", z klasy Transformation.
+     */
+    @Test
+    public void testAddDot() {
+        String text = "Mam na imię Mariusz";
+        String expResult = "Mam na imię Mariusz.";
+        String result = Transformation.addDot(text);
+        assertEquals(expResult, result);
+    }
+    
 }
