@@ -34,5 +34,9 @@
     {
         "name": "eliminate",
         "description": "pozwala eliminować powtarzające się wyrazy w bezpośrednim sąsiedztwie"
+    },
+	{
+        "name": "addDot",
+        "description": "pozwala na zapisanie kropki na końcu zdania"
     }
 ]
