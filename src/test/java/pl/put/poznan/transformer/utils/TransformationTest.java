@@ -121,4 +121,14 @@ public class TransformationTest {
         assertEquals(expResult, result);
     }
     
+    /**
+     * Test transformacji "eliminate", z klasy Transformation.
+     */
+    @Test
+    public void testEliminate() {
+        String text = "Wyślij do do do mnie wiadomość";
+        String expResult = "Wyślij do mnie wiadomość";
+        String result = Transformation.eliminate(text);
+        assertEquals(expResult, result);
+    }
 }
