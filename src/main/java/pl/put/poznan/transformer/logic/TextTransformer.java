@@ -49,8 +49,11 @@ public class TextTransformer {
                 text = Transformation.abbreviationToWord(text);
             if(transform.equals("wordToAbbreviation"))
                 text = Transformation.wordToAbbreviation(text);
+            if(transform.equals("dot"))
+                text = Transformation.addDot(text);
+            if(transform.equals("eliminate"))
+                text = Transformation.eliminate(text);
             //tu inne opcje
-            
         return text;
     }
     
