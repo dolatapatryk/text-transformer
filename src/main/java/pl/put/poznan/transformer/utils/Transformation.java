@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,6 +95,40 @@ public class Transformation {
         }
         
         return text;
+    }
+
+    /**
+     * Metoda wstawiająca wielkie litery na początku zdań
+     * @param text - tekst do przetworzenia
+     * @return tekst z wielkimi literami na początku każdego zdania
+     */
+
+    public static String capitalizeSentences(String text){
+        String[] sentences = text.split(Pattern.quote(". "));
+        System.out.println("sentences len " + sentences.length);
+        System.out.println("text len " + text.length());
+        for(int i = 0; i < sentences.length-1; i++){
+            System.out.println(i);
+            String[] wordsInSentence = sentences[i].split(" ");
+            String temp = wordsInSentence[wordsInSentence.length-1];
+            if (temp == expandShortcut(temp, true)){
+                int j = 0;
+                while (sentences[i+1].charAt(j) == ' ')
+                    j++;
+                sentences[i+1] = sentences[i+1].substring(j,j+1).toUpperCase() + sentences[i+1].substring(j+1);
+                sentences[i] = sentences[i]+". ";
+            }
+            else {
+                sentences[i] += ". ";
+            }
+        }
+
+        String output = "";
+        for (int i = 0; i<sentences.length; i++){
+            output+=sentences[i];
+        }
+        output = output.substring(0,1).toUpperCase() + output.substring(1);
+        return output;
     }
 
     /***

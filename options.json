@@ -16,6 +16,10 @@
         "description": "pozwala zamienić każdą pierwszą literę w słowie na wielką"
     },
     {
+        "name": "capitalizeSentences",
+        "description": "pozwala wstawić wielkie litery na początku każdego zdania"
+    },
+    {
         "name": "numberToText",
         "description": "pozwala zamieniać liczby na tekst w języku polskim"
     },
