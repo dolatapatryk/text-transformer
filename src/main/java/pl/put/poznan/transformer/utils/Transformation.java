@@ -98,6 +98,24 @@ public class Transformation {
     }
 
     /**
+     * Metoda wstawiająca spacje po każdym wystąpieniu wyspecyfikowanego znaku, z wyłączeniem ostatniej litery
+     * @param text - tekst do przetworzenia
+     * @param character - znak, po którym należy wstawiać spacje
+     * @return tekst ze spacjami po wyspecyfikowanych znakach
+     */
+    public static String addSpacesAfter(String text, char character){
+        String returnText = "";
+        for (int i = 0; i < text.length()-1; i++){
+            returnText += text.charAt(i);
+            if (text.charAt(i) == character) {
+                returnText += " ";
+            }
+        }
+        returnText += text.charAt(text.length()-1);
+        return returnText;
+    }
+
+    /**
      * Metoda wstawiająca wielkie litery na początku zdań
      * @param text - tekst do przetworzenia
      * @return tekst z wielkimi literami na początku każdego zdania
@@ -108,7 +126,6 @@ public class Transformation {
         System.out.println("sentences len " + sentences.length);
         System.out.println("text len " + text.length());
         for(int i = 0; i < sentences.length-1; i++){
-            System.out.println(i);
             String[] wordsInSentence = sentences[i].split(" ");
             String temp = wordsInSentence[wordsInSentence.length-1];
             if (temp == expandShortcut(temp, true)){

@@ -41,6 +41,10 @@ public class TextTransformer {
                 text = Transformation.inverse(text);
             if(transform.equals("capitalize"))
                 text = Transformation.capitalize(text);
+            if(transform.equals("addSpacesAfterCommas"))
+                text = Transformation.addSpacesAfter(text, ',');
+            if(transform.equals("addSpacesAfterDots"))
+                text = Transformation.addSpacesAfter(text, '.');
             if(transform.equals("capitalizeSentences"))
                 text = Transformation.capitalizeSentences(text);
             if(transform.equals("upper"))

@@ -55,6 +55,28 @@ public class TransformationTest {
     }
 
     /**
+     * Test transfomacji "addSpacesAfterDots" z klasy Transformation.
+     */
+    @Test
+    public void testAddSpacesAfterDots(){
+        String text = "ala.ma.kota.";
+        String expResult = "ala. ma. kota. ";
+        String result = Transformation.addSpacesAfter(text, '.');
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test transfomacji "addSpacesAfterCommas" z klasy Transformation.
+     */
+    @Test
+    public void testAddSpacesAfterCommas(){
+        String text = "ala,ma,kota.";
+        String expResult = "ala, ma, kota.";
+        String result = Transformation.addSpacesAfter(text, ',');
+        assertEquals(expResult, result);
+    }
+
+    /**
      * Test transformacji "capitalizeSentences", z klasy Transformation.
      */
     @Test
