@@ -18,38 +18,27 @@ public class TextTransformerTest {
     public TextTransformerTest() {
     }
     
+    @Test
+    public void testDecorate() {
+        String[] transforms ={ "inverse"};
+        TextTransformer instance = new TextTransformer(transforms);
+        Transformer result = instance.decorate(transforms[0]);
+        assertEquals("kerim", result.transform("mirek"));
+    }
     /**
-     * Test metody transform, z klasy TextTransformer.
+     * Test of transform method, of class TextTransformer.
      */
     @Test
     public void testTransform() {
-        String text = "MirEk";
-        String transform = "inverse";
-        TextTransformer instance = new TextTransformer(new String[]{transform});
-        String expResult = "KerIm";
-        String result = instance.transform(text, transform);
+        String text = "polibuda";
+        TextTransformer instance = new TextTransformer(new String[]{"upper"});
+        String expResult = "POLIBUDA";
+        String result = instance.transform(text);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test głównej metody transformującej, z klasy TextTransformer.
-     */
-    @Test
-    public void testSuperTransform() {
-        String text = "Wpłać -12,67 złotego";
-        UserTransformModel userTransform = new UserTransformModel("moja");
-        userTransform.setTransforms(new String[]{"inverse","upper"});
-        userTransforms.add(userTransform);
-        
-        String[] transforms = {"numberToText", "moja"};
-        TextTransformer instance = new TextTransformer(transforms);
-        String expResult = "OGETOŁZ HCYNTES MEDEIS TĄISEIZDĆŚEZS I EICŚANAWD SUNIM ĆAŁPW";
-        String result = instance.superTransform(text);
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test metody transformWithUserTransforms, z klasy TextTransformer.
+     * Test of transformWithUserTransforms method, of class TextTransformer.
      */
     @Test
     public void testTransformWithUserTransforms() {
@@ -60,8 +49,8 @@ public class TextTransformerTest {
         
         TextTransformer instance = new TextTransformer(new String[]{"moja"});
         String expResult = "OGETOŁZ 76,21- ĆAŁPW";
-        String result = instance.transformWithUserTransforms(text, userTransform);
-        assertEquals(expResult, result);
+        Transformer result = instance.decorateWithUserTransforms(userTransform);
+        assertEquals(expResult, result.transform(text));
     }
 
     

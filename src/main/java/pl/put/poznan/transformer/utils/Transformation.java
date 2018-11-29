@@ -43,9 +43,9 @@ public class Transformation {
     public static String inverse(String text) {
         String reverse = reverse(text);
         
-        String inverse = keepLettersSize(text, reverse);
+        //String inverse = keepLettersSize(text, reverse);
         
-        return inverse;
+        return reverse;
     }
     
     /**
@@ -105,10 +105,7 @@ public class Transformation {
 
     public static String capitalizeSentences(String text){
         String[] sentences = text.split(Pattern.quote(". "));
-        System.out.println("sentences len " + sentences.length);
-        System.out.println("text len " + text.length());
         for(int i = 0; i < sentences.length-1; i++){
-            System.out.println(i);
             String[] wordsInSentence = sentences[i].split(" ");
             String temp = wordsInSentence[wordsInSentence.length-1];
             if (temp == expandShortcut(temp, true)){
@@ -419,11 +416,12 @@ public class Transformation {
      * @return wyrażenie z kropką na końcu
      */
     public static String addDot(String text) {
-        StringBuilder result=new StringBuilder(text);
+        StringBuilder result = new StringBuilder(text);
         if(!text.endsWith("."))
             result.append(".");
+        text = result.toString();
         
-        return result.toString();
+        return text;
     }
     
     /**
