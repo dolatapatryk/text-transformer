@@ -43,9 +43,9 @@ public class Transformation {
     public static String inverse(String text) {
         String reverse = reverse(text);
         
-        String inverse = keepLettersSize(text, reverse);
+        //String inverse = keepLettersSize(text, reverse);
         
-        return inverse;
+        return reverse;
     }
     
     /**
@@ -419,11 +419,12 @@ public class Transformation {
      * @return wyrażenie z kropką na końcu
      */
     public static String addDot(String text) {
-        StringBuilder result=new StringBuilder(text);
+        StringBuilder result = new StringBuilder(text);
         if(!text.endsWith("."))
             result.append(".");
+        text = result.toString();
         
-        return result.toString();
+        return text;
     }
     
     /**

@@ -49,7 +49,7 @@ public class JsonTextTransformerController {
         TextTransformer transformer = new TextTransformer(text.getTransforms());
         TextModel result = new TextModel();
         
-        result.setText(transformer.superTransform(text.getText()));
+        result.setText(transformer.transform(text.getText()));
         
         return ResponseMessage.objectToJson(result);
     }
