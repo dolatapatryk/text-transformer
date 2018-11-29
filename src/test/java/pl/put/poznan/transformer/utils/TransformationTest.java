@@ -55,6 +55,17 @@ public class TransformationTest {
     }
 
     /**
+     * Test transformacji "capitalizeSentences", z klasy Transformation.
+     */
+    @Test
+    public void testCapitalizeSentences(){
+        String text = "mam fajne buty. lubię te buty. a np. czarne lubię najbardziej.";
+        String expResult = "Mam fajne buty. Lubię te buty. A np. czarne lubię najbardziej.";
+        String result = Transformation.capitalizeSentences(text);
+        assertEquals(expResult, result);
+    }
+
+    /**
      * Test transformacji "abbreviationToWord", z klasy Transformation.
      */
     @Test

@@ -41,6 +41,8 @@ public class TextTransformer {
                 text = Transformation.inverse(text);
             if(transform.equals("capitalize"))
                 text = Transformation.capitalize(text);
+            if(transform.equals("capitalizeSentences"))
+                text = Transformation.capitalizeSentences(text);
             if(transform.equals("upper"))
                 text = Transformation.upper(text);
             if(transform.equals("lower"))
