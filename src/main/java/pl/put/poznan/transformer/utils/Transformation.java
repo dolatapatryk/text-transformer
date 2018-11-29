@@ -105,10 +105,7 @@ public class Transformation {
 
     public static String capitalizeSentences(String text){
         String[] sentences = text.split(Pattern.quote(". "));
-        System.out.println("sentences len " + sentences.length);
-        System.out.println("text len " + text.length());
         for(int i = 0; i < sentences.length-1; i++){
-            System.out.println(i);
             String[] wordsInSentence = sentences[i].split(" ");
             String temp = wordsInSentence[wordsInSentence.length-1];
             if (temp == expandShortcut(temp, true)){

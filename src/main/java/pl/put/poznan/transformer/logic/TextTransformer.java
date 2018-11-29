@@ -1,8 +1,5 @@
 package pl.put.poznan.transformer.logic;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import lombok.Getter;
 import pl.put.poznan.transformer.decorator.AbbreviationToWordDecorator;
 import pl.put.poznan.transformer.decorator.AddDotDecorator;
@@ -83,7 +80,7 @@ public class TextTransformer {
         for(String transform : this.transforms) {
             if(Utils.checkUserTransforms(transform)) {
                 UserTransformModel userTransform = Utils.getTransformWithGivenName(transform);
-                transformer = transformWithUserTransforms(userTransform);
+                transformer = decorateWithUserTransforms(userTransform);
             } else 
                 transformer = decorate(transform);
         }
@@ -96,7 +93,7 @@ public class TextTransformer {
      * @param userTransforms model ciągu transformacji użytkownika
      * @return  obiekt udekorowany ciągiem transformacji użytkownika
      */
-    public Transformer transformWithUserTransforms(UserTransformModel userTransforms) {
+    public Transformer decorateWithUserTransforms(UserTransformModel userTransforms) {
         for(String transform : userTransforms.getTransforms())
             transformer = decorate(transform);
         
