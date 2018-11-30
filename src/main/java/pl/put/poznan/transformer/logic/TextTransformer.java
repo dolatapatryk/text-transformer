@@ -1,16 +1,7 @@
 package pl.put.poznan.transformer.logic;
 
 import lombok.Getter;
-import pl.put.poznan.transformer.decorator.AbbreviationToWordDecorator;
-import pl.put.poznan.transformer.decorator.AddDotDecorator;
-import pl.put.poznan.transformer.decorator.CapitalizeDecorator;
-import pl.put.poznan.transformer.decorator.CapitalizeSentencesDecorator;
-import pl.put.poznan.transformer.decorator.EliminateDecorator;
-import pl.put.poznan.transformer.decorator.InverseDecorator;
-import pl.put.poznan.transformer.decorator.LowerDecorator;
-import pl.put.poznan.transformer.decorator.NumberToTextDecorator;
-import pl.put.poznan.transformer.decorator.UpperDecorator;
-import pl.put.poznan.transformer.decorator.WordToAbbreviationDecorator;
+import pl.put.poznan.transformer.decorator.*;
 import pl.put.poznan.transformer.utils.Utils;
 
 /**
@@ -51,12 +42,11 @@ public class TextTransformer {
             if(transform.equals("inverse"))
                 transformer = new InverseDecorator(transformer);
             if(transform.equals("capitalize"))
-                text = Transformation.capitalize(text);
-            if(transform.equals("addSpacesAfterCommas"))
-                text = Transformation.addSpacesAfter(text, ',');
-            if(transform.equals("addSpacesAfterDots"))
-                text = Transformation.addSpacesAfter(text, '.');
                 transformer = new CapitalizeDecorator(transformer);
+            if(transform.equals("addSpacesAfterCommas"))
+                transformer = new AddSpacesAfterDecorator(transformer, ',');
+            if(transform.equals("addSpacesAfterDots"))
+                transformer = new AddSpacesAfterDecorator(transformer, '.');
             if(transform.equals("capitalizeSentences"))
                 transformer = new CapitalizeSentencesDecorator(transformer);
             if(transform.equals("upper"))
