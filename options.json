@@ -16,6 +16,14 @@
         "description": "pozwala zamienić każdą pierwszą literę w słowie na wielką"
     },
     {
+        "name": "addSpacesAfterDots",
+        "description": "pozwala na dodanie spacji po kropkach"
+    },
+    {
+        "name": "addSpacesAfterCommas",
+        "description": "pozwala na dodanie spacji po przecinkach"
+    },
+    {
         "name": "capitalizeSentences",
         "description": "pozwala wstawić wielkie litery na początku każdego zdania"
     },

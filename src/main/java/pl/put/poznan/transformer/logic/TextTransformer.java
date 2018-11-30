@@ -1,16 +1,7 @@
 package pl.put.poznan.transformer.logic;
 
 import lombok.Getter;
-import pl.put.poznan.transformer.decorator.AbbreviationToWordDecorator;
-import pl.put.poznan.transformer.decorator.AddDotDecorator;
-import pl.put.poznan.transformer.decorator.CapitalizeDecorator;
-import pl.put.poznan.transformer.decorator.CapitalizeSentencesDecorator;
-import pl.put.poznan.transformer.decorator.EliminateDecorator;
-import pl.put.poznan.transformer.decorator.InverseDecorator;
-import pl.put.poznan.transformer.decorator.LowerDecorator;
-import pl.put.poznan.transformer.decorator.NumberToTextDecorator;
-import pl.put.poznan.transformer.decorator.UpperDecorator;
-import pl.put.poznan.transformer.decorator.WordToAbbreviationDecorator;
+import pl.put.poznan.transformer.decorator.*;
 import pl.put.poznan.transformer.utils.Utils;
 
 /**
@@ -18,7 +9,7 @@ import pl.put.poznan.transformer.utils.Utils;
  * @author patryk, marcel, artur, dominik
  */
 public class TextTransformer {
-    
+
     /**
      * Obiekt klasy Transformer, którego będziemy dekorować transformacjami
      */
@@ -29,7 +20,7 @@ public class TextTransformer {
      */
     @Getter private final String[] transforms;
     
-    
+
 
     /**
      * Konstruktor klasy, przyjmujący transformacje, których chce użytkownik
@@ -52,6 +43,10 @@ public class TextTransformer {
                 transformer = new InverseDecorator(transformer);
             if(transform.equals("capitalize"))
                 transformer = new CapitalizeDecorator(transformer);
+            if(transform.equals("addSpacesAfterCommas"))
+                transformer = new AddSpacesAfterDecorator(transformer, ',');
+            if(transform.equals("addSpacesAfterDots"))
+                transformer = new AddSpacesAfterDecorator(transformer, '.');
             if(transform.equals("capitalizeSentences"))
                 transformer = new CapitalizeSentencesDecorator(transformer);
             if(transform.equals("upper"))
@@ -66,7 +61,7 @@ public class TextTransformer {
                 transformer = new AddDotDecorator(transformer);
             if(transform.equals("eliminate"))
                 transformer = new EliminateDecorator(transformer);
-  
+
         return transformer;
     }
     
