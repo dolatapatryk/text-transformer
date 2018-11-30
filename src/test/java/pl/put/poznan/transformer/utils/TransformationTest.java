@@ -38,7 +38,7 @@ public class TransformationTest {
     @Test
     public void testInverse() {
         String text = "MirEk";
-        String expResult = "KerIm";
+        String expResult = "kEriM";
         String result = Transformation.inverse(text);
         assertEquals(expResult, result);
     }

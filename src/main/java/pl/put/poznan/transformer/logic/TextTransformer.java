@@ -1,11 +1,16 @@
 package pl.put.poznan.transformer.logic;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.Getter;
-import pl.put.poznan.transformer.utils.Transformation;
-import static pl.put.poznan.transformer.app.TextTransformerApplication.userTransforms;
+import pl.put.poznan.transformer.decorator.AbbreviationToWordDecorator;
+import pl.put.poznan.transformer.decorator.AddDotDecorator;
+import pl.put.poznan.transformer.decorator.CapitalizeDecorator;
+import pl.put.poznan.transformer.decorator.CapitalizeSentencesDecorator;
+import pl.put.poznan.transformer.decorator.EliminateDecorator;
+import pl.put.poznan.transformer.decorator.InverseDecorator;
+import pl.put.poznan.transformer.decorator.LowerDecorator;
+import pl.put.poznan.transformer.decorator.NumberToTextDecorator;
+import pl.put.poznan.transformer.decorator.UpperDecorator;
+import pl.put.poznan.transformer.decorator.WordToAbbreviationDecorator;
 import pl.put.poznan.transformer.utils.Utils;
 
 /**
@@ -15,10 +20,16 @@ import pl.put.poznan.transformer.utils.Utils;
 public class TextTransformer {
 
     /**
+     * Obiekt klasy Transformer, którego będziemy dekorować transformacjami
+     */
+    private Transformer transformer;
+
+    /**
      * tablica transformacji
      */
     @Getter private final String[] transforms;
     
+
 
     /**
      * Konstruktor klasy, przyjmujący transformacje, których chce użytkownik
@@ -26,41 +37,42 @@ public class TextTransformer {
      */
     public TextTransformer(String[] transforms){
         this.transforms = transforms;
+        this.transformer = new Text();
     }
     
     /**
-     * Metoda zmieniająca tekst na podstawie podanej transformacji
-     * @param text tekst wejściowy
+     * Metoda dekorująca nasz obiekt klasy Transformer
      * @param transform nazwa transformacji
-     * @return  ztransformowany tekst
+     * @return udekorowany obiekt
      */
-    public String transform(String text, String transform){
+    public Transformer decorate(String transform){
             if(transform.equals("numberToText"))
-                text = Transformation.numberToText(text);
+                transformer = new NumberToTextDecorator(transformer);
             if(transform.equals("inverse"))
-                text = Transformation.inverse(text);
+                transformer = new InverseDecorator(transformer);
             if(transform.equals("capitalize"))
                 text = Transformation.capitalize(text);
             if(transform.equals("addSpacesAfterCommas"))
                 text = Transformation.addSpacesAfter(text, ',');
             if(transform.equals("addSpacesAfterDots"))
                 text = Transformation.addSpacesAfter(text, '.');
+                transformer = new CapitalizeDecorator(transformer);
             if(transform.equals("capitalizeSentences"))
-                text = Transformation.capitalizeSentences(text);
+                transformer = new CapitalizeSentencesDecorator(transformer);
             if(transform.equals("upper"))
-                text = Transformation.upper(text);
+                transformer = new UpperDecorator(transformer);
             if(transform.equals("lower"))
-                text = Transformation.lower(text);
+                transformer = new LowerDecorator(transformer);
             if(transform.equals("abbreviationToWord"))
-                text = Transformation.abbreviationToWord(text);
+                transformer = new AbbreviationToWordDecorator(transformer);
             if(transform.equals("wordToAbbreviation"))
-                text = Transformation.wordToAbbreviation(text);
+                transformer = new WordToAbbreviationDecorator(transformer);
             if(transform.equals("addDot"))
-                text = Transformation.addDot(text);
+                transformer = new AddDotDecorator(transformer);
             if(transform.equals("eliminate"))
-                text = Transformation.eliminate(text);
-            //tu inne opcje
-        return text;
+                transformer = new EliminateDecorator(transformer);
+
+        return transformer;
     }
     
     /**
@@ -69,29 +81,28 @@ public class TextTransformer {
      * @param text tekst wprowadzony przez użytkownika
      * @return ztransformowany tekst użytkownika
      */
-    public String superTransform(String text) {
+    public String transform(String text) {
         for(String transform : this.transforms) {
             if(Utils.checkUserTransforms(transform)) {
                 UserTransformModel userTransform = Utils.getTransformWithGivenName(transform);
-                text = transformWithUserTransforms(text, userTransform);
+                transformer = decorateWithUserTransforms(userTransform);
             } else 
-                text = transform(text, transform);
+                transformer = decorate(transform);
         }
         
-        return text;
+        return transformer.transform(text);
     }
     
     /**
-     * Metoda, która transformuje tekst na podstawie zdefiniowanego ciągu transformacji użytkownika
-     * @param text wejściowy tekst
+     * Metoda, która dekoruje obiekt na podstawie zdefiniowanego ciągu transformacji użytkownika
      * @param userTransforms model ciągu transformacji użytkownika
-     * @return  ztransformowany tekst
+     * @return  obiekt udekorowany ciągiem transformacji użytkownika
      */
-    public String transformWithUserTransforms(String text, UserTransformModel userTransforms) {
+    public Transformer decorateWithUserTransforms(UserTransformModel userTransforms) {
         for(String transform : userTransforms.getTransforms())
-            text = transform(text, transform);
+            transformer = decorate(transform);
         
-        return text;
+        return transformer;
     }
     
 }
