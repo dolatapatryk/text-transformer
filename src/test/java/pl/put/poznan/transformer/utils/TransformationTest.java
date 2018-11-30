@@ -60,7 +60,7 @@ public class TransformationTest {
     @Test
     public void testAddSpacesAfterDots(){
         String text = "ala.ma.kota.";
-        String expResult = "ala. ma. kota. ";
+        String expResult = "ala. ma. kota.";
         String result = Transformation.addSpacesAfter(text, '.');
         assertEquals(expResult, result);
     }
