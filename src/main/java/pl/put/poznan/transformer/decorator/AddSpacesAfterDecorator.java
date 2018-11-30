@@ -9,5 +9,5 @@ public class AddSpacesAfterDecorator extends TransformerDecorator {
     private char symbol;
 
     @Override
-    public String transform(String text) { return Transformation.addSpacesAfter(text,symbol); }
+    public String transform(String text) { return Transformation.addSpacesAfter(transformer.transform(text),symbol); }
 }
