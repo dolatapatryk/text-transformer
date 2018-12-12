@@ -515,7 +515,7 @@ public class Transformation {
         while (matcher.find()) {
             String[] parts = matcher.group().split("\\.");
             if(parts.length == 3){
-                date = parts[0] + " " + miesiace[strToInt(parts[1]) + 1] + " " + parseYear(parts[2]);
+                date = parts[0] + " " + miesiace[strToInt(parts[1]) - 1] + " " + parseYear(parts[2]);
                
                 result = result.replace(matcher.group(),date);
             }
