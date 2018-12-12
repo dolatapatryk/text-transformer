@@ -488,7 +488,7 @@ public class Transformation {
      * @param src oryginalny tekst
      * @return tekst z datami zapisanymi jako słowa
      */
-    public static String dataToText(String src) {
+    public static String dateToText(String src) {
         String result = src;
         
         Pattern pattern = Pattern.compile("([0-2][0-9]|(3)[0-1])(\\.)(((0)[0-9])|((1)[0-2]))(\\.)\\d{2,4}");

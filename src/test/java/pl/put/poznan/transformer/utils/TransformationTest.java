@@ -164,4 +164,15 @@ public class TransformationTest {
         String result = Transformation.eliminate(text);
         assertEquals(expResult, result);
     }
+    
+    /**
+     * Test transformacji "DateToText", z klasy Transformation.
+     */
+    @Test
+    public void testDateToText() {
+        String text = "W tym tekscie jest data 11.12.18 fajna no nie?";
+        String expResult = "W tym tekscie jest data 11 grudnia 2018 fajna no nie?";
+        String result = Transformation.dateToText(text);
+        assertEquals(expResult, result);
+    }
 }
