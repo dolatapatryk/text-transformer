@@ -61,7 +61,8 @@ public class TextTransformer {
                 transformer = new AddDotDecorator(transformer);
             if(transform.equals("eliminate"))
                 transformer = new EliminateDecorator(transformer);
-
+            if(transform.equals("dateToText"))
+                transformer = new DateToTextDecorator(transformer);
         return transformer;
     }
     
