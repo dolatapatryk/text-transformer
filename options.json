@@ -50,5 +50,9 @@
 	{
         "name": "addDot",
         "description": "pozwala na zapisanie kropki na końcu zdania"
+    },
+    {
+        "name": "dateToText",
+        "description": "pozwala zamienić datę z wersji liczbowej na słowną"
     }
 ]
