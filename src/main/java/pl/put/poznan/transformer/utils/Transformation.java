@@ -1,9 +1,14 @@
 package pl.put.poznan.transformer.utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +19,24 @@ import org.slf4j.LoggerFactory;
 public class Transformation {
     
     private static final Logger logger = LoggerFactory.getLogger(Transformation.class);
+    
+    /**
+     * Metoda zmieniająca wszystkie litery w tekście na wielkie
+     * @param text oryginalny tekst
+     * @return tekst, który wszystkie litery ma wielkie
+     */
+    public static String upper(String text) {
+        return text.toUpperCase();
+    }
+    
+    /**
+     * Metoda zmieniająca wszystkie litery w tekście na małe
+     * @param text oryginalny tekst
+     * @return tekst, który wszystie litery ma małe
+     */
+    public static String lower(String text) {
+        return text.toLowerCase();
+    }
 
     /**
      * Metoda do odwracania tekstu z zachowaniem wielkości liter na odpowiednich pozycjach
@@ -23,9 +46,9 @@ public class Transformation {
     public static String inverse(String text) {
         String reverse = reverse(text);
         
-        String inverse = keepLettersSize(text, reverse);
+        //String inverse = keepLettersSize(text, reverse);
         
-        return inverse;
+        return reverse;
     }
     
     /**
@@ -64,11 +87,66 @@ public class Transformation {
     public static String capitalize(String text){
         String[] words = text.split(" ");
         text = "";
-        for (String w : words){
-            w = w.substring(0,1).toUpperCase() + w.substring(1);
-            text = text +" "+ w;
+   
+        for(int i = 0; i < words.length; i++) {
+            words[i] = words[i].substring(0,1).toUpperCase() + words[i].substring(1);
+            
+            if(i == 0)
+                text = text + words[i];
+            else
+                text = text + " " + words[i];
         }
+        
         return text;
+    }
+
+    /**
+     * Metoda wstawiająca spacje po każdym wystąpieniu wyspecyfikowanego znaku, z wyłączeniem ostatniej litery
+     * @param text - tekst do przetworzenia
+     * @param character - znak, po którym należy wstawiać spacje
+     * @return tekst ze spacjami po wyspecyfikowanych znakach
+     */
+    public static String addSpacesAfter(String text, char character){
+        String returnText = "";
+        for (int i = 0; i < text.length()-1; i++){
+            returnText += text.charAt(i);
+            if (text.charAt(i) == character) {
+                returnText += " ";
+            }
+        }
+        returnText += text.charAt(text.length()-1);
+        return returnText;
+    }
+
+    /**
+     * Metoda wstawiająca wielkie litery na początku zdań
+     * @param text - tekst do przetworzenia
+     * @return tekst z wielkimi literami na początku każdego zdania
+     */
+
+    public static String capitalizeSentences(String text){
+        String[] sentences = text.split(Pattern.quote(". "));
+        for(int i = 0; i < sentences.length-1; i++){
+            String[] wordsInSentence = sentences[i].split(" ");
+            String temp = wordsInSentence[wordsInSentence.length-1];
+            if (temp == expandShortcut(temp, true)){
+                int j = 0;
+                while (sentences[i+1].charAt(j) == ' ')
+                    j++;
+                sentences[i+1] = sentences[i+1].substring(j,j+1).toUpperCase() + sentences[i+1].substring(j+1);
+                sentences[i] = sentences[i]+". ";
+            }
+            else {
+                sentences[i] += ". ";
+            }
+        }
+
+        String output = "";
+        for (int i = 0; i<sentences.length; i++){
+            output+=sentences[i];
+        }
+        output = output.substring(0,1).toUpperCase() + output.substring(1);
+        return output;
     }
 
     /***
@@ -111,7 +189,6 @@ public class Transformation {
         sentences.add("i tym podobne");
         sentences.add("i tak dalej");
 
-        src = src.toLowerCase();
         for(String sentence: sentences){
             if(src.toLowerCase().contains(sentence)){
                 src = src.replace(sentence, createShortcut(sentence));
@@ -184,7 +261,7 @@ public class Transformation {
 
         String shorted = sentence;
 
-        if(sentences.containsKey(sentence)){
+        if(sentences.containsKey(sentence.toLowerCase())){
             shorted = sentences.get(sentence);
         }
 
@@ -353,4 +430,139 @@ public class Transformation {
         if(fraction) word.append(koncowkaUlamka.toString());
         return word.toString().substring(0, word.toString().length()-1); //Zwraca stringa bez ostatniego znaku - spacji
     }
+    
+    /**
+     * Metoda dodająca kropkę na końcu zdania
+     * @param text zdanie, które ma zostać zakończone kropką
+     * @return wyrażenie z kropką na końcu
+     */
+    public static String addDot(String text) {
+        StringBuilder result = new StringBuilder(text);
+        if(!text.endsWith("."))
+            result.append(".");
+        text = result.toString();
+        
+        return text;
+    }
+    
+    /**
+     * Metoda eliminująca powtarzające się wyrazy w bezpośrednim sąsiedztwie
+     * @param text Wyrażenie do edycji
+     * @return Wyrażenie bez powtarzających się słów
+     */
+    public static String eliminate(String text) {
+        StringBuilder result=new StringBuilder("");
+        String[] tab = text.split("[ ]+");
+        if(tab.length > 0) {
+            result.append(tab[0]);
+            for(int i = 1; i < tab.length; i++) {
+                if(!tab[i].endsWith(".") &&
+                   !tab[i].endsWith(",") &&
+                   !tab[i].endsWith("!") &&
+                   !tab[i].endsWith("?") &&
+                   !tab[i].endsWith(":") &&
+                   !tab[i].endsWith(";") &&
+                   !tab[i].endsWith("-") &&
+                   !tab[i].endsWith("+")) {
+                    if(!tab[i].toLowerCase().equals(tab[i-1].toLowerCase())) {
+                        result.append(" ");
+                        result.append(tab[i]);
+                    }
+                } else {
+                    if(tab[i].toLowerCase().matches(tab[i-1].toLowerCase()+tab[i].charAt(tab[i].length()-1)))
+                        result.append(tab[i].charAt(tab[i].length()-1));
+                    else {
+                        result.append(" ");
+                        result.append(tab[i]);
+                    }
+                        
+                }
+            }
+        }
+        return result.toString();
+    }
+    
+    
+     /**
+     * Metoda rozpoznająca datę i zapisująca miesiące słownie
+     * @param src oryginalny tekst
+     * @return tekst z datami zapisanymi jako słowa
+     */
+    public static String dateToText(String src) {
+        String result = src;
+        
+        Pattern pattern = Pattern.compile("([0-2][0-9]|(3)[0-1])(\\.)(((0)[0-9])|((1)[0-2]))(\\.)\\d{2,4}");
+        Matcher matcher = pattern.matcher(src);
+        
+        String[] miesiace = {
+            "stycznia",
+            "lutego",
+            "marca",
+            "kwietnia",
+            "maja",
+            "czerwca",
+            "lipa",
+            "sierpnia",
+            "września",
+            "października",
+            "listopada",
+            "grudnia"
+        };
+        
+        
+        
+        String date = "";
+        while (matcher.find()) {
+            String[] parts = matcher.group().split("\\.");
+            if(parts.length == 3){
+                date = parts[0] + " " + miesiace[strToInt(parts[1]) - 1] + " " + parseYear(parts[2]);
+               
+                result = result.replace(matcher.group(),date);
+            }
+            
+        }
+        
+        return result;
+    }
+    
+    public static int strToInt(String str){
+        int number = 0;
+        
+        switch(str.charAt(0)){
+            case '0': 
+                number = str.charAt(1);
+                break;           
+            case '1': 
+                number = Integer.parseInt(str);
+                break;
+                
+        }
+        return number;
+    }
+    
+    public static String parseYear(String str){
+        String year = "";
+        
+        switch(str.length()){
+            case 2: 
+                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+                
+                if(currentYear < Integer.parseInt("20" + str)){
+                    year = "19" + str;
+                } else {
+                    year = "20" + str;
+                }
+                break;  
+            case 3: 
+                year = "2" + str;
+                break;                 
+            case 4: 
+                year = str;
+                break;
+                
+        }
+        return year;
+    }
+    
+          
 }

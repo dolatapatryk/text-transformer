@@ -16,6 +16,18 @@
         "description": "pozwala zamienić każdą pierwszą literę w słowie na wielką"
     },
     {
+        "name": "addSpacesAfterDots",
+        "description": "pozwala na dodanie spacji po kropkach"
+    },
+    {
+        "name": "addSpacesAfterCommas",
+        "description": "pozwala na dodanie spacji po przecinkach"
+    },
+    {
+        "name": "capitalizeSentences",
+        "description": "pozwala wstawić wielkie litery na początku każdego zdania"
+    },
+    {
         "name": "numberToText",
         "description": "pozwala zamieniać liczby na tekst w języku polskim"
     },
@@ -34,5 +46,9 @@
     {
         "name": "eliminate",
         "description": "pozwala eliminować powtarzające się wyrazy w bezpośrednim sąsiedztwie"
+    },
+	{
+        "name": "addDot",
+        "description": "pozwala na zapisanie kropki na końcu zdania"
     }
 ]
