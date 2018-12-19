@@ -30,8 +30,8 @@ public class JsonTextTransformerController {
      *          "upper"
      *      ]
      * }
-     * @param input
-     * @return 
+     * @param input tekst wejsciowy
+     * @return ztransformowany tekst
      */
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public String post(@RequestBody String input) {

@@ -14,6 +14,7 @@ public class UserTransformModel {
     /**
      * 
      * Konstruktor przyjmujący nazwe ciągu jako parametr
+     * @param name nazwa własnego ciągu transformacji
      */
     public UserTransformModel(String name) {
         this.name = name;

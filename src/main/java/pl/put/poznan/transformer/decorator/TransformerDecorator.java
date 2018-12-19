@@ -15,7 +15,7 @@ public abstract class TransformerDecorator implements Transformer {
     
     /**
      * Konstruktor dekoratora przyjmujący obiekt do dekorowania
-     * @param transformer 
+     * @param transformer obiekt do transformacji
      */
     public TransformerDecorator(Transformer transformer) {
         this.transformer = transformer;

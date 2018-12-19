@@ -546,7 +546,7 @@ public class Transformation {
     }
     
     /**
-     * Parsuje rok na czterocyfrowy rok np 18 -> 2018
+     * Parsuje rok na czterocyfrowy rok np 18 - 2018
      * @param str wejściowy napis z rokiem
      * @return zparsowany rok
      */
