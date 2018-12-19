@@ -525,6 +525,11 @@ public class Transformation {
         return result;
     }
     
+    /**
+     * Zamienia string na int w specyficzny sposób, potrzebne do parsowania roku
+     * @param str wejściowy napis
+     * @return napis zamieniony na integer
+     */
     public static int strToInt(String str){
         int number = 0;
         
@@ -540,6 +545,11 @@ public class Transformation {
         return number;
     }
     
+    /**
+     * Parsuje rok na czterocyfrowy rok np 18 -> 2018
+     * @param str wejściowy napis z rokiem
+     * @return zparsowany rok
+     */
     public static String parseYear(String str){
         String year = "";
         
