@@ -13,6 +13,9 @@ public class TextTransformerApplication {
     public static List<UserTransformModel> userTransforms = new ArrayList<>();
 
     public static void main(String[] args) {
+        UserTransformModel u = new UserTransformModel("moja");
+        u.setTransforms(new String[] {"upper", "inverse"});
+        userTransforms.add(u);
         SpringApplication.run(TextTransformerApplication.class, args);
     }
 }
