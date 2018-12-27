@@ -166,17 +166,6 @@ public class TransformationTest {
     }
     
     /**
-     * Test transformacji "correctCity", z klasy Transformation.
-     */
-    @Test
-    public void testCorrectCity() {
-        String text = "poznan to fajne miasto tak jak wroclaw czy krakuw";
-        String expResult = "Poznań to fajne miasto tak jak Wrocław czy Kraków";
-        String result = Transformation.correctCity(text);
-        assertEquals(expResult, result);
-    }
-    
-     /**
      * Test transformacji "dateToText", z klasy Transformation.
      */
     @Test
@@ -184,6 +173,17 @@ public class TransformationTest {
         String text = "W tym tekscie jest data 11.12.18 fajna no nie?";
         String expResult = "W tym tekscie jest data 11 grudnia 2018 fajna no nie?";
         String result = Transformation.dateToText(text);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test transformacji "correctCity", z klasy Transformation.
+     */
+    @Test
+    public void testCorrectCity() {
+        String text = "poznan to fajne miasto tak jak wroclaw czy krakuw";
+        String expResult = "Poznań to fajne miasto tak jak Wrocław czy Kraków";
+        String result = Transformation.correctCity(text);
         assertEquals(expResult, result);
     }
 }
