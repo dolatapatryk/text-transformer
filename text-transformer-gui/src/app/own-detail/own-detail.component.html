@@ -1,0 +1,12 @@
+<div *ngIf="userTransform">
+
+  <h2>{{userTransform.name | uppercase}} Details</h2>
+  <div><span>name: </span>{{userTransform.name}}</div>
+  <div>
+    <label>transforms:
+      <input #transforms [(ngModel)]="userTransform.transforms" placeholder="transforms"/>
+    </label>
+  </div>
+  <button (click)="updateUserTransform(transforms.value)">Update</button>
+
+</div>

@@ -1,0 +1,28 @@
+<div>
+    <div>
+      <label>Name:
+        <input #name placeholder="Enter the name"/>
+      </label>
+    </div>
+    <div>
+      <label>Transforms:
+        <input #transforms/>
+      </label>
+    </div>
+  </div>
+  <button (click)="handleCreateButton(name.value, transforms.value)"
+          (click)="name.value=''"
+          (click)="transforms.value=''">
+    create
+  </button>
+
+  <ul class="own">
+      <li *ngFor="let userTransform of userTransforms"
+      (click)="onSelect(userTransform)">
+        <span class="badge">{{userTransform.name}}</span> {{userTransform.transforms}}
+      </li>
+    </ul>
+
+<app-own-detail [userTransform]="selected"></app-own-detail>
+  
+  
