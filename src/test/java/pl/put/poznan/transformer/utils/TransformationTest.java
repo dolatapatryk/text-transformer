@@ -173,6 +173,7 @@ public class TransformationTest {
         String text = "poznan to fajne miasto tak jak wroclaw czy krakuw";
         String expResult = "Poznań to fajne miasto tak jak Wrocław czy Kraków";
         String result = Transformation.correctCity(text);
+        assertEquals(expResult, result);
     }
     
      /**
