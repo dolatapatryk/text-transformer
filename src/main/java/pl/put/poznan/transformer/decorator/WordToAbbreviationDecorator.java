@@ -11,6 +11,6 @@ public class WordToAbbreviationDecorator extends TransformerDecorator {
     
     @Override
     public String transform(String text) {
-        return Transformation.wordToAbbreviation(text);
+        return Transformation.wordToAbbreviation(transformer.transform(text));
     }
 }

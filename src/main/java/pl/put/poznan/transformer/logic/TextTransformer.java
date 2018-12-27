@@ -63,7 +63,9 @@ public class TextTransformer {
                 transformer = new EliminateDecorator(transformer);
             if(transform.equals("correctCity"))
                 transformer = new CorrectCityDecorator(transformer);
-
+            if(transform.equals("dateToText"))
+                transformer = new DateToTextDecorator(transformer);
+      
         return transformer;
     }
     

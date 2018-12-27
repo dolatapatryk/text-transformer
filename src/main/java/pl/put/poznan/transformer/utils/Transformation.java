@@ -1,11 +1,14 @@
 package pl.put.poznan.transformer.utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -501,5 +504,86 @@ public class Transformation {
         }
         
         return text;
+    }
+    
+     /**
+     * Metoda rozpoznająca datę i zapisująca miesiące słownie
+     * @param src oryginalny tekst
+     * @return tekst z datami zapisanymi jako słowa
+     */
+    public static String dateToText(String src) {
+        String result = src;
+        
+        Pattern pattern = Pattern.compile("([0-2][0-9]|(3)[0-1])(\\.)(((0)[0-9])|((1)[0-2]))(\\.)\\d{2,4}");
+        Matcher matcher = pattern.matcher(src);
+        
+        String[] miesiace = {
+            "stycznia",
+            "lutego",
+            "marca",
+            "kwietnia",
+            "maja",
+            "czerwca",
+            "lipa",
+            "sierpnia",
+            "września",
+            "października",
+            "listopada",
+            "grudnia"
+        };
+        
+        
+        
+        String date = "";
+        while (matcher.find()) {
+            String[] parts = matcher.group().split("\\.");
+            if(parts.length == 3){
+                date = parts[0] + " " + miesiace[strToInt(parts[1]) - 1] + " " + parseYear(parts[2]);
+               
+                result = result.replace(matcher.group(),date);
+            }
+            
+        }
+        
+        return result;
+    }
+    
+    public static int strToInt(String str){
+        int number = 0;
+        
+        switch(str.charAt(0)){
+            case '0': 
+                number = str.charAt(1);
+                break;           
+            case '1': 
+                number = Integer.parseInt(str);
+                break;
+                
+        }
+        return number;
+    }
+    
+    public static String parseYear(String str){
+        String year = "";
+        
+        switch(str.length()){
+            case 2: 
+                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+                
+                if(currentYear < Integer.parseInt("20" + str)){
+                    year = "19" + str;
+                } else {
+                    year = "20" + str;
+                }
+                break;  
+            case 3: 
+                year = "2" + str;
+                break;                 
+            case 4: 
+                year = str;
+                break;
+                
+        }
+        return year;
     }
 }

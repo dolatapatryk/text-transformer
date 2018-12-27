@@ -11,6 +11,6 @@ public class CapitalizeSentencesDecorator extends TransformerDecorator {
     
     @Override
     public String transform(String text) {
-        return Transformation.capitalizeSentences(text);
+        return Transformation.capitalizeSentences(transformer.transform(text));
     }
 }

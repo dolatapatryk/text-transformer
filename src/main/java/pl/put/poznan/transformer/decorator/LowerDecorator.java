@@ -11,6 +11,6 @@ public class LowerDecorator extends TransformerDecorator {
     
     @Override
     public String transform(String text) {
-        return Transformation.lower(text);
+        return Transformation.lower(transformer.transform(text));
     }
 }

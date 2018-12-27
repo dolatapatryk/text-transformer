@@ -11,6 +11,6 @@ public class EliminateDecorator extends TransformerDecorator {
     
     @Override
     public String transform(String text) {
-        return Transformation.eliminate(text);
+        return Transformation.eliminate(transformer.transform(text));
     }
 }
