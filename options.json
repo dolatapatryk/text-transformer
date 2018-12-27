@@ -50,5 +50,9 @@
 	{
         "name": "addDot",
         "description": "pozwala na zapisanie kropki na końcu zdania"
+    },
+    {
+        "name": "correctCity",
+        "description": "pozwala na poprawę pisowni miast"
     }
 ]
