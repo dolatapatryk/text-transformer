@@ -61,6 +61,8 @@ public class TextTransformer {
                 transformer = new AddDotDecorator(transformer);
             if(transform.equals("eliminate"))
                 transformer = new EliminateDecorator(transformer);
+            if(transform.equals("correctCity"))
+                transformer = new CorrectCityDecorator(transformer);
 
         return transformer;
     }
