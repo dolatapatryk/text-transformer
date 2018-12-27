@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.put.poznan.transformer.logic.MapKey;
 
 /**
  * Klasa poasiadająca metody transformacji na tekście
@@ -485,6 +487,19 @@ public class Transformation {
      * @return tekst z poprawionym słowem miasta
      */
     public static String correctCity(String text) {
+        Map<MapKey, String> cityMap = new HashMap<>();
+        cityMap.put(new MapKey("poznan", "poznań"), "Poznań");
+        cityMap.put(new MapKey("warszawa"), "Warszawa");
+        cityMap.put(new MapKey("krakow", "kraków", "krakuw"), "Kraków");
+        cityMap.put(new MapKey("wroclaw", "wrocław"), "Wrocław");
         
+        for(Entry<MapKey, String> entry : cityMap.entrySet()) {
+            for(String key : entry.getKey().getKeys()) {
+                if(text.toLowerCase().contains(key))
+                    text.replace(key, entry.getValue());
+            }
+        }
+        
+        return text;
     }
 }

@@ -1,5 +1,8 @@
 package pl.put.poznan.transformer.logic;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -8,15 +11,21 @@ import lombok.Data;
  */
 public @Data class MapKey {
     
-    private String key1;
-    private String key2;
+    private List<String> keys = new ArrayList<>();
     
-    public boolean checkIfContains(String key) {
-        if(key.equals(key1))
-            return true;
-        else if (key.equals(key2))
+    public MapKey(){};
+    
+    public MapKey(String... keys) {
+        this.keys.addAll(Arrays.asList(keys));
+    }
+
+    public boolean contains(String key) {
+        if(this.keys.contains(key))
             return true;
         else
             return false;
     }
+    
+    
+    
 }
