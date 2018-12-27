@@ -496,7 +496,7 @@ public class Transformation {
         for(Entry<MapKey, String> entry : cityMap.entrySet()) {
             for(String key : entry.getKey().getKeys()) {
                 if(text.toLowerCase().contains(key))
-                    text.replace(key, entry.getValue());
+                    text = text.replace(key, entry.getValue());
             }
         }
         

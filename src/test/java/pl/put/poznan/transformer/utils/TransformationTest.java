@@ -164,4 +164,15 @@ public class TransformationTest {
         String result = Transformation.eliminate(text);
         assertEquals(expResult, result);
     }
+    
+    /**
+     * Test transformacji "correctCity", z klasy Transformation.
+     */
+    @Test
+    public void testCorrectCity() {
+        String text = "poznan to fajne miasto tak jak wroclaw czy krakuw";
+        String expResult = "Poznań to fajne miasto tak jak Wrocław czy Kraków";
+        String result = Transformation.correctCity(text);
+        assertEquals(expResult, result);
+    }
 }
