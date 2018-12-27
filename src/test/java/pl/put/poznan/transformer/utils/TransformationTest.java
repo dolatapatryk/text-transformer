@@ -166,7 +166,17 @@ public class TransformationTest {
     }
     
     /**
-     * Test transformacji "DateToText", z klasy Transformation.
+     * Test transformacji "correctCity", z klasy Transformation.
+     */
+    @Test
+    public void testCorrectCity() {
+        String text = "poznan to fajne miasto tak jak wroclaw czy krakuw";
+        String expResult = "Poznań to fajne miasto tak jak Wrocław czy Kraków";
+        String result = Transformation.correctCity(text);
+    }
+    
+     /**
+     * Test transformacji "dateToText", z klasy Transformation.
      */
     @Test
     public void testDateToText() {
