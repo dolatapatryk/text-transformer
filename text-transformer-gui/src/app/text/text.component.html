@@ -1,0 +1,20 @@
+<div>
+  <div>
+    <label>Text:
+      <input #text placeholder="Enter the text"/>
+    </label>
+  </div>
+  <div>
+    <label id="transformsLabel">Transforms:
+      <input #transforms/>
+    </label>
+  </div>
+</div>
+<button (click)="handleTransformButton(text.value, transforms.value)"
+        (click)="text.value=''"
+        (click)="transforms.value=''">
+  transform
+</button>
+<div>
+  <span>Transformated text: </span><label class="transformLabel">{{transformatedText}}</label>
+</div>
