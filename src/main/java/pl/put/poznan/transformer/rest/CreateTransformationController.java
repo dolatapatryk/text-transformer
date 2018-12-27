@@ -22,6 +22,11 @@ import pl.put.poznan.transformer.utils.Utils;
 public class CreateTransformationController {
     
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CreateTransformationController.class);
+    
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public String get() {
+        return ResponseMessage.objectToJson(userTransforms);
+    }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public String post(@RequestBody String input) {

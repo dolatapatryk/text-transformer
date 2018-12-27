@@ -3,15 +3,19 @@ package pl.put.poznan.transformer.decorator;
 import pl.put.poznan.transformer.logic.Transformer;
 import pl.put.poznan.transformer.utils.Transformation;
 
-public class NumberToTextDecorator extends TransformerDecorator {
-    
-    public NumberToTextDecorator(Transformer transformer) {
+/**
+ *
+ * @author patrykdolata
+ */
+public class CorrectCityDecorator extends TransformerDecorator {
+
+    public CorrectCityDecorator(Transformer transformer) {
         super(transformer);
     }
     
     @Override
     public String transform(String text) {
-        return Transformation.numberToText(transformer.transform(text));
+        return Transformation.correctCity(transformer.transform(text));
     }
-    
+
 }

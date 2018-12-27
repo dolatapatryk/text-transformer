@@ -47,9 +47,13 @@
         "name": "eliminate",
         "description": "pozwala eliminować powtarzające się wyrazy w bezpośrednim sąsiedztwie"
     },
-	{
+	  {
         "name": "addDot",
         "description": "pozwala na zapisanie kropki na końcu zdania"
+    },
+    {
+        "name": "correctCity",
+        "description": "pozwala na poprawę pisowni miast"
     },
     {
         "name": "dateToText",
