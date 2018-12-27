@@ -478,4 +478,13 @@ public class Transformation {
         }
         return result.toString();
     }
+    
+    /**
+     * Poprawia pisownie wybranych miast
+     * @param text wejściowy tekst
+     * @return tekst z poprawionym słowem miasta
+     */
+    public static String correctCity(String text) {
+        
+    }
 }
