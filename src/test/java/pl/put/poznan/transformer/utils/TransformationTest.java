@@ -2,6 +2,11 @@ package pl.put.poznan.transformer.utils;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import pl.put.poznan.transformer.decorator.CorrectCityDecorator;
+import pl.put.poznan.transformer.logic.Text;
+import pl.put.poznan.transformer.logic.Transformer;
 
 /**
  *
@@ -177,13 +182,17 @@ public class TransformationTest {
     }
     
     /**
-     * Test transformacji "correctCity", z klasy Transformation.
+     * Test transformacji "correctCity".
      */
     @Test
     public void testCorrectCity() {
         String text = "poznan to fajne miasto tak jak wroclaw czy krakuw";
         String expResult = "Poznań to fajne miasto tak jak Wrocław czy Kraków";
-        String result = Transformation.correctCity(text);
+        
+        Transformer mock = mock(Text.class);
+        when(mock.transform(text)).thenReturn(text);
+        mock = new CorrectCityDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
 }
