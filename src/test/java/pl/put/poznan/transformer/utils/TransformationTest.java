@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import pl.put.poznan.transformer.decorator.CorrectCityDecorator;
+import pl.put.poznan.transformer.decorator.UpperDecorator;
 import pl.put.poznan.transformer.logic.Text;
 import pl.put.poznan.transformer.logic.Transformer;
 
@@ -14,17 +15,18 @@ import pl.put.poznan.transformer.logic.Transformer;
  */
 public class TransformationTest {
     
-    public TransformationTest() {
-    }
-    
     /**
-     * Test transformacji "upper", z klasy Transformation.
+     * Test transformacji "upper".
      */
     @Test
     public void testUpper() {
         String text = "Projekt z inżynierii oprogramowania";
         String expResult = "PROJEKT Z INŻYNIERII OPROGRAMOWANIA";
-        String result = Transformation.upper(text);
+        
+        Transformer mock = mock(Text.class);
+        when(mock.transform(text)).thenReturn(text);
+        mock = new UpperDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
     

@@ -18,10 +18,6 @@ import pl.put.poznan.transformer.logic.UserTransformModel;
  */
 public class UtilsTest {
     
-    public UtilsTest() {
-    }
-    
-
     /**
      * Test metody checkIfNameIsTaken, z klasy Utils.
      */

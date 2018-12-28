@@ -21,15 +21,6 @@ public class Transformation {
     private static final Logger logger = LoggerFactory.getLogger(Transformation.class);
     
     /**
-     * Metoda zmieniająca wszystkie litery w tekście na wielkie
-     * @param text oryginalny tekst
-     * @return tekst, który wszystkie litery ma wielkie
-     */
-    public static String upper(String text) {
-        return text.toUpperCase();
-    }
-    
-    /**
      * Metoda zmieniająca wszystkie litery w tekście na małe
      * @param text oryginalny tekst
      * @return tekst, który wszystie litery ma małe

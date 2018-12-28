@@ -1,7 +1,6 @@
 package pl.put.poznan.transformer.decorator;
 
 import pl.put.poznan.transformer.logic.Transformer;
-import pl.put.poznan.transformer.utils.Transformation;
 
 public class UpperDecorator extends TransformerDecorator {
     
@@ -11,6 +10,15 @@ public class UpperDecorator extends TransformerDecorator {
     
    @Override
    public String transform(String text) {
-       return Transformation.upper(transformer.transform(text));
+       return upper(transformer.transform(text));
    }
+   
+    /**
+     * Metoda zmieniająca wszystkie litery w tekście na wielkie
+     * @param text oryginalny tekst
+     * @return tekst, który wszystkie litery ma wielkie
+     */
+    public static String upper(String text) {
+        return text.toUpperCase();
+    }
 }
