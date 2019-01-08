@@ -1,7 +1,6 @@
 package pl.put.poznan.transformer.decorator;
 
 import pl.put.poznan.transformer.logic.Transformer;
-import pl.put.poznan.transformer.utils.Transformation;
 
 public class LowerDecorator extends TransformerDecorator {
     
@@ -11,6 +10,15 @@ public class LowerDecorator extends TransformerDecorator {
     
     @Override
     public String transform(String text) {
-        return Transformation.lower(transformer.transform(text));
+        return lower(transformer.transform(text));
+    }
+    
+    /**
+     * Metoda zmieniająca wszystkie litery w tekście na małe
+     * @param text oryginalny tekst
+     * @return tekst, który wszystie litery ma małe
+     */
+    public static String lower(String text) {
+        return text.toLowerCase();
     }
 }
