@@ -2,8 +2,12 @@ package pl.put.poznan.transformer.utils;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import pl.put.poznan.transformer.decorator.CorrectCityDecorator;
 import pl.put.poznan.transformer.decorator.UpperDecorator;
 import pl.put.poznan.transformer.logic.Text;
@@ -15,6 +19,20 @@ import pl.put.poznan.transformer.logic.Transformer;
  */
 public class TransformationTest {
     
+    Transformer mock;
+    
+    @Before
+    public void initialize() {
+        mock = mock(Text.class);
+        when(mock.transform(anyString())).thenAnswer(new Answer<String>() {
+            @Override
+            public String answer(InvocationOnMock invocation) throws Throwable {
+                Object[] args = invocation.getArguments();
+                return (String) args[0];
+            }
+        });
+    }
+    
     /**
      * Test transformacji "upper".
      */
@@ -23,8 +41,6 @@ public class TransformationTest {
         String text = "Projekt z inżynierii oprogramowania";
         String expResult = "PROJEKT Z INŻYNIERII OPROGRAMOWANIA";
         
-        Transformer mock = mock(Text.class);
-        when(mock.transform(text)).thenReturn(text);
         mock = new UpperDecorator(mock);
         String result = mock.transform(text);
         assertEquals(expResult, result);
