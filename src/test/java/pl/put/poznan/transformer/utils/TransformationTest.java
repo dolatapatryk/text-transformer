@@ -2,6 +2,24 @@ package pl.put.poznan.transformer.utils;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import pl.put.poznan.transformer.decorator.AbbreviationToWordDecorator;
+import pl.put.poznan.transformer.decorator.AddSpacesAfterDecorator;
+import pl.put.poznan.transformer.decorator.CapitalizeDecorator;
+import pl.put.poznan.transformer.decorator.CapitalizeSentencesDecorator;
+import pl.put.poznan.transformer.decorator.CorrectCityDecorator;
+import pl.put.poznan.transformer.decorator.InverseDecorator;
+import pl.put.poznan.transformer.decorator.LowerDecorator;
+import pl.put.poznan.transformer.decorator.NumberToTextDecorator;
+import pl.put.poznan.transformer.decorator.UpperDecorator;
+import pl.put.poznan.transformer.decorator.WordToAbbreviationDecorator;
+import pl.put.poznan.transformer.logic.Text;
+import pl.put.poznan.transformer.logic.Transformer;
 
 /**
  *
@@ -9,26 +27,46 @@ import static org.junit.Assert.*;
  */
 public class TransformationTest {
     
-    public TransformationTest() {
+    /**
+     * Zastępczy obiekt klasy Transformer
+     */
+    Transformer mock;
+    
+    @Before
+    public void initialize() {
+        mock = mock(Text.class);
+        when(mock.transform(anyString())).thenAnswer(new Answer<String>() {
+            @Override
+            public String answer(InvocationOnMock invocation) throws Throwable {
+                Object[] args = invocation.getArguments();
+                return (String) args[0];
+            }
+        });
     }
     
     /**
-     * Test transformacji "upper", z klasy Transformation.
+     * Test transformacji "upper".
      */
     @Test
     public void testUpper() {
         String text = "Projekt z inżynierii oprogramowania";
         String expResult = "PROJEKT Z INŻYNIERII OPROGRAMOWANIA";
-        String result = Transformation.upper(text);
+        
+        mock = new UpperDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
     
-    
+    /**
+     * Test transformacji "lower".
+     */
     @Test
     public void testLower() {
         String text = "PROJEKT Z INŻYNIERII OPROGRAMOWANIA";
         String expResult = "projekt z inżynierii oprogramowania";
-        String result = Transformation.lower(text);
+        
+        mock = new LowerDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
 
@@ -39,7 +77,9 @@ public class TransformationTest {
     public void testInverse() {
         String text = "MirEk";
         String expResult = "kEriM";
-        String result = Transformation.inverse(text);
+        
+        mock = new InverseDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
 
@@ -50,7 +90,9 @@ public class TransformationTest {
     public void testCapitalize() {
         String text = "mam fajne buty";
         String expResult = "Mam Fajne Buty";
-        String result = Transformation.capitalize(text);
+        
+        mock = new CapitalizeDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
 
@@ -61,7 +103,9 @@ public class TransformationTest {
     public void testAddSpacesAfterDots(){
         String text = "ala.ma.kota.";
         String expResult = "ala. ma. kota.";
-        String result = Transformation.addSpacesAfter(text, '.');
+        
+        mock = new AddSpacesAfterDecorator(mock, '.');
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
 
@@ -72,7 +116,9 @@ public class TransformationTest {
     public void testAddSpacesAfterCommas(){
         String text = "ala,ma,kota.";
         String expResult = "ala, ma, kota.";
-        String result = Transformation.addSpacesAfter(text, ',');
+        
+        mock = new AddSpacesAfterDecorator(mock, ',');
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
 
@@ -83,7 +129,9 @@ public class TransformationTest {
     public void testCapitalizeSentences(){
         String text = "mam fajne buty. lubię te buty. a np. czarne lubię najbardziej.";
         String expResult = "Mam fajne buty. Lubię te buty. A np. czarne lubię najbardziej.";
-        String result = Transformation.capitalizeSentences(text);
+        
+        mock = new CapitalizeSentencesDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
 
@@ -94,7 +142,9 @@ public class TransformationTest {
     public void testAbbreviationToWord() {
         String src = "Pan Prof. spóźnił się na zajęcia";
         String expResult = "Pan Profesor spóźnił się na zajęcia";
-        String result = Transformation.abbreviationToWord(src);
+        
+        mock = new AbbreviationToWordDecorator(mock);
+        String result = mock.transform(src);
         assertEquals(expResult, result);
     }
 
@@ -105,7 +155,9 @@ public class TransformationTest {
     public void testWordToAbbreviation() {
         String src = "Pieczywo to na przykład chleb i bułki";
         String expResult = "Pieczywo to np. chleb i bułki";
-        String result = Transformation.wordToAbbreviation(src);
+        
+        mock = new WordToAbbreviationDecorator(mock);
+        String result = mock.transform(src);
         assertEquals(expResult, result);
     }
 
@@ -139,7 +191,9 @@ public class TransformationTest {
     public void testNumberToText() {
         String src = "Wpłać -12,67 złotych";
         String expResult = "Wpłać minus dwanaście i sześćdziesiąt siedem setnych złotych";
-        String result = Transformation.numberToText(src);
+        
+        mock = new NumberToTextDecorator(mock);
+        String result = mock.transform(src);
         assertEquals(expResult, result);
     }
     
@@ -177,13 +231,15 @@ public class TransformationTest {
     }
     
     /**
-     * Test transformacji "correctCity", z klasy Transformation.
+     * Test transformacji "correctCity".
      */
     @Test
     public void testCorrectCity() {
         String text = "poznan to fajne miasto tak jak wroclaw czy krakuw";
         String expResult = "Poznań to fajne miasto tak jak Wrocław czy Kraków";
-        String result = Transformation.correctCity(text);
+        
+        mock = new CorrectCityDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
 }

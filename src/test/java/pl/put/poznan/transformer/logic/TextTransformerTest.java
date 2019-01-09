@@ -15,9 +15,6 @@ import static pl.put.poznan.transformer.app.TextTransformerApplication.userTrans
  */
 public class TextTransformerTest {
     
-    public TextTransformerTest() {
-    }
-    
     @Test
     public void testDecorate() {
         String[] transforms ={ "inverse"};

@@ -37,7 +37,7 @@ public class TextTransformer {
      * @return udekorowany obiekt
      */
     public Transformer decorate(String transform){
-            if(transform.equals("numberToText"))
+            if("numberToText".equals(transform))
                 transformer = new NumberToTextDecorator(transformer);
             if(transform.equals("inverse"))
                 transformer = new InverseDecorator(transformer);

@@ -11,5 +11,5 @@ public interface Transformer {
      * @param text wejściowy tekst
      * @return ztransformowany tekst
      */
-   public  String transform(String text);
+   public String transform(String text);
 }

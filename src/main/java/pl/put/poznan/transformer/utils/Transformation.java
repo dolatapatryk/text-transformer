@@ -1,18 +1,14 @@
 package pl.put.poznan.transformer.utils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.put.poznan.transformer.logic.MapKey;
 
 /**
  * Klasa poasiadająca metody transformacji na tekście
@@ -23,42 +19,11 @@ public class Transformation {
     private static final Logger logger = LoggerFactory.getLogger(Transformation.class);
     
     /**
-     * Metoda zmieniająca wszystkie litery w tekście na wielkie
-     * @param text oryginalny tekst
-     * @return tekst, który wszystkie litery ma wielkie
-     */
-    public static String upper(String text) {
-        return text.toUpperCase();
-    }
-    
-    /**
-     * Metoda zmieniająca wszystkie litery w tekście na małe
-     * @param text oryginalny tekst
-     * @return tekst, który wszystie litery ma małe
-     */
-    public static String lower(String text) {
-        return text.toLowerCase();
-    }
-
-    /**
-     * Metoda do odwracania tekstu z zachowaniem wielkości liter na odpowiednich pozycjach
-     * @param text oryginalny tekst
-     * @return odwrócony tekst z zachowanie wielkości liter na pozycjach
-     */
-    public static String inverse(String text) {
-        String reverse = reverse(text);
-        
-        //String inverse = keepLettersSize(text, reverse);
-        
-        return reverse;
-    }
-    
-    /**
      * Metoda do odwracania tekstu
      * @param text oryginalny tekst
      * @return odwrócony tekst
      */
-    private static String reverse(String text) {
+    public static String reverse(String text) {
         return new StringBuilder(text).reverse().toString();
     }
     
@@ -79,126 +44,6 @@ public class Transformation {
         }
         
         return dest;
-    }
-
-    /**
-     * Metoda zamieniająca pierwszą literę w każdym wyrazie na wielką
-     * @param text - tekst wejsciowy
-     * @return tekst, w którym każde słowo zaczyna się wielką literą
-     */
-    public static String capitalize(String text){
-        String[] words = text.split(" ");
-        text = "";
-   
-        for(int i = 0; i < words.length; i++) {
-            words[i] = words[i].substring(0,1).toUpperCase() + words[i].substring(1);
-            
-            if(i == 0)
-                text = text + words[i];
-            else
-                text = text + " " + words[i];
-        }
-        
-        return text;
-    }
-
-    /**
-     * Metoda wstawiająca spacje po każdym wystąpieniu wyspecyfikowanego znaku, z wyłączeniem ostatniej litery
-     * @param text - tekst do przetworzenia
-     * @param character - znak, po którym należy wstawiać spacje
-     * @return tekst ze spacjami po wyspecyfikowanych znakach
-     */
-    public static String addSpacesAfter(String text, char character){
-        String returnText = "";
-        for (int i = 0; i < text.length()-1; i++){
-            returnText += text.charAt(i);
-            if (text.charAt(i) == character) {
-                returnText += " ";
-            }
-        }
-        returnText += text.charAt(text.length()-1);
-        return returnText;
-    }
-
-    /**
-     * Metoda wstawiająca wielkie litery na początku zdań
-     * @param text - tekst do przetworzenia
-     * @return tekst z wielkimi literami na początku każdego zdania
-     */
-
-    public static String capitalizeSentences(String text){
-        String[] sentences = text.split(Pattern.quote(". "));
-        for(int i = 0; i < sentences.length-1; i++){
-            String[] wordsInSentence = sentences[i].split(" ");
-            String temp = wordsInSentence[wordsInSentence.length-1];
-            if (temp == expandShortcut(temp, true)){
-                int j = 0;
-                while (sentences[i+1].charAt(j) == ' ')
-                    j++;
-                sentences[i+1] = sentences[i+1].substring(j,j+1).toUpperCase() + sentences[i+1].substring(j+1);
-                sentences[i] = sentences[i]+". ";
-            }
-            else {
-                sentences[i] += ". ";
-            }
-        }
-
-        String output = "";
-        for (int i = 0; i<sentences.length; i++){
-            output+=sentences[i];
-        }
-        output = output.substring(0,1).toUpperCase() + output.substring(1);
-        return output;
-    }
-
-    /***
-     * Metoda znajdująca i rozwijająca skróty w tekście
-     * @param src - tekst w którym należy rozwinąć skróty
-     * @return tekst z rozwiniętymi skrótami
-     */
-    public static String abbreviationToWord(String src){
-        String[] words = src.split(" ");
-
-        String newText = "";
-        String newWord = "";
-        for(int i = 0; i < words.length; i++){
-            if(i != words.length - 1)
-                newWord = expandShortcut(words[i], false);
-            else
-                newWord = expandShortcut(words[i], true);
-            newText += newWord;
-            if(newWord.equals(words[i])){
-                 logger.debug("equals: " + words[i]);
-                 if(i != words.length - 1)
-                    newText += " ";
-            } else {
-                logger.debug(newText + " notequals: " + words[i]);
-            }
-        }
-
-        return newText;
-    }
-
-    /***
-     * Metoda znajdująca i zamieniająca słowa na skróty
-     * @param src - tekst w którym należy znaleźć i zamienić wyrazy na skróty
-     * @return tekst ze słowami zwiniętymi w skróty
-     */
-    public static String wordToAbbreviation(String src){
-        List<String> sentences = new ArrayList<String>();
-        sentences.add("między innymi");
-        sentences.add("na przykład");
-        sentences.add("i tym podobne");
-        sentences.add("i tak dalej");
-
-        for(String sentence: sentences){
-            if(src.toLowerCase().contains(sentence)){
-                src = src.replace(sentence, createShortcut(sentence));
-                logger.debug("znaleziono: " + sentence);
-            }
-        }
-
-        return src;
     }
 
     /***
@@ -271,66 +116,6 @@ public class Transformation {
     }
 
     /**
-     * Metoda rozpoznająca liczby i zapisująca je za pomocą słów
-     * @param src oryginalny tekst
-     * @return tekst z liczbami zapisanymi jako słowa
-     */
-    public static String numberToText(String src) {
-        StringBuilder dest=new StringBuilder("");
-        StringBuilder number=new StringBuilder("");
-        boolean num = false, newSent = true, fraction = false;
-        for(int i = 0; i < src.length(); i++) {
-            if(Character.isDigit(src.charAt(i))) {
-                if(!num){
-                    number=new StringBuilder("");
-                    num = true;
-                    if(i - 1 > -1) if(!Character.isWhitespace(i-1)) dest.append(" ");
-                }
-                number.append(src.charAt(i));
-            } else {
-                if(number.length() > 0 && i + 1 < src.length() && src.charAt(i) == ',' && Character.isDigit(src.charAt(i+1)) && !fraction) {
-                    if(Integer.parseInt(number.toString()) != 0) {
-                        dest.append(convertNum(Integer.parseInt(number.toString()), newSent, fraction, number.length()));
-                        dest.append(" i ");
-                    }
-                    fraction = true;
-                    num = false;
-                } else {
-                    if(num) {
-                        num = false;
-                        dest.append(convertNum(Integer.parseInt(number.toString()), newSent, fraction, number.length()));
-                        if(fraction) fraction = false;
-                    }
-                    if(i + 1 < src.length() && src.charAt(i) == '-' && Character.isDigit(src.charAt(i+1)) && !fraction){
-                        if(i - 1 > -1 && !newSent) {
-                            if(Character.isWhitespace(src.charAt(i-1))) dest.append("minus");
-                            else dest.append(" minus");
-                        }
-                        else if(i - 1 > -1 && newSent) {
-                            if(Character.isWhitespace(src.charAt(i-1))) {
-                                dest.append("Minus");
-                                newSent = false;
-                            } else if(src.charAt(i-1) == '.') {
-                                dest.append(" Minus");
-                                newSent = false;
-                            }
-                        }
-                        if(i == 0) dest.append("Minus");
-                    } else {
-                        if(i - 1 > -1 && !Character.isWhitespace(src.charAt(i)) && src.charAt(i) != '.' && src.charAt(i) != ',')
-                            if(Character.isDigit(src.charAt(i-1))) dest.append(" ");
-                        dest.append(src.charAt(i));
-                    }
-                    if(!Character.isWhitespace(src.charAt(i))) newSent = false;
-                    if(src.charAt(i) == '.') newSent = true;
-                }
-            }
-        }
-        if(num) dest.append(convertNum(Integer.parseInt(number.toString()), newSent, fraction, number.length()));
-        return dest.toString();
-    }
-
-    /**
      * Metoda konwertująca liczbę na tekst
      * @param number liczba poddawana konwersji na tekst
      * @param newSentence zmienna logiczna przechowująca informację o tym, czy liczba znajduje się na początku zdania
@@ -338,7 +123,7 @@ public class Transformation {
      * @param length długość liczby w zapisie dziesiętnym - kluczowe przy części ułamkowej
      * @return tekst reprezentujący podaną liczbę
      */
-    private static String convertNum(Integer number, Boolean newSentence, Boolean fraction, Integer length) {
+    public static String convertNum(Integer number, Boolean newSentence, Boolean fraction, Integer length) {
         String zaduzyulamek = "!za duża ilość cyfr po przecinku! ";
         String zaduzaliczba = "!za duża liczba!";
         if(length > 20 && fraction) return zaduzyulamek;
@@ -573,27 +358,5 @@ public class Transformation {
                 
         }
         return year;
-    }
-    
-    /**
-     * Poprawia pisownie wybranych miast
-     * @param text wejściowy tekst
-     * @return tekst z poprawionym słowem miasta
-     */
-    public static String correctCity(String text) {
-        Map<MapKey, String> cityMap = new HashMap<>();
-        cityMap.put(new MapKey("poznan", "poznań"), "Poznań");
-        cityMap.put(new MapKey("warszawa"), "Warszawa");
-        cityMap.put(new MapKey("krakow", "kraków", "krakuw"), "Kraków");
-        cityMap.put(new MapKey("wroclaw", "wrocław"), "Wrocław");
-        
-        for(Entry<MapKey, String> entry : cityMap.entrySet()) {
-            for(String key : entry.getKey().getKeys()) {
-                if(text.toLowerCase().contains(key))
-                    text = text.replace(key, entry.getValue());
-            }
-        }
-        
-        return text;
     }
 }
