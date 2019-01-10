@@ -8,16 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import pl.put.poznan.transformer.decorator.AbbreviationToWordDecorator;
-import pl.put.poznan.transformer.decorator.AddSpacesAfterDecorator;
-import pl.put.poznan.transformer.decorator.CapitalizeDecorator;
-import pl.put.poznan.transformer.decorator.CapitalizeSentencesDecorator;
-import pl.put.poznan.transformer.decorator.CorrectCityDecorator;
-import pl.put.poznan.transformer.decorator.InverseDecorator;
-import pl.put.poznan.transformer.decorator.LowerDecorator;
-import pl.put.poznan.transformer.decorator.NumberToTextDecorator;
-import pl.put.poznan.transformer.decorator.UpperDecorator;
-import pl.put.poznan.transformer.decorator.WordToAbbreviationDecorator;
+import pl.put.poznan.transformer.decorator.*;
 import pl.put.poznan.transformer.logic.Text;
 import pl.put.poznan.transformer.logic.Transformer;
 
@@ -31,7 +22,11 @@ public class TransformationTest {
      * Zastępczy obiekt klasy Transformer
      */
     Transformer mock;
-    
+
+    /**
+     * Metoda sygnowana adnotacją @Before, do inicjalizowania obiektu zastępczego i
+     * ustawiania zwwracanej wartości przez jego metodę <i>transform</i>
+     */
     @Before
     public void initialize() {
         mock = mock(Text.class);
@@ -45,7 +40,7 @@ public class TransformationTest {
     }
     
     /**
-     * Test transformacji "upper".
+     * Test dekoratora "upper".
      */
     @Test
     public void testUpper() {
@@ -58,7 +53,7 @@ public class TransformationTest {
     }
     
     /**
-     * Test transformacji "lower".
+     * Test dekoratora "lower".
      */
     @Test
     public void testLower() {
@@ -71,12 +66,12 @@ public class TransformationTest {
     }
 
     /**
-     * Test transformacji "inverse", z klasy Transformation.
+     * Test dekoratora "inverse".
      */
     @Test
     public void testInverse() {
         String text = "MirEk";
-        String expResult = "kEriM";
+        String expResult = "KerIm";
         
         mock = new InverseDecorator(mock);
         String result = mock.transform(text);
@@ -84,7 +79,7 @@ public class TransformationTest {
     }
 
     /**
-     * Test transformacji "capitalize", z klasy Transformation.
+     * Test dekoratora "capitalize".
      */
     @Test
     public void testCapitalize() {
@@ -97,7 +92,7 @@ public class TransformationTest {
     }
 
     /**
-     * Test transfomacji "addSpacesAfterDots" z klasy Transformation.
+     * Test dekoratora "addSpacesAfter" i znaku ".".
      */
     @Test
     public void testAddSpacesAfterDots(){
@@ -110,7 +105,7 @@ public class TransformationTest {
     }
 
     /**
-     * Test transfomacji "addSpacesAfterCommas" z klasy Transformation.
+     * Test dekoratora "addSpacesAfter" i znaku ",".
      */
     @Test
     public void testAddSpacesAfterCommas(){
@@ -123,7 +118,7 @@ public class TransformationTest {
     }
 
     /**
-     * Test transformacji "capitalizeSentences", z klasy Transformation.
+     * Test dekoratora "capitalizeSentences".
      */
     @Test
     public void testCapitalizeSentences(){
@@ -136,7 +131,7 @@ public class TransformationTest {
     }
 
     /**
-     * Test transformacji "abbreviationToWord", z klasy Transformation.
+     * Test dekoratora "abbreviationToWord".
      */
     @Test
     public void testAbbreviationToWord() {
@@ -149,7 +144,7 @@ public class TransformationTest {
     }
 
     /**
-     * Test transformacji "wordToAbbreviation", z klasy Transformation.
+     * Test dekoratora "wordToAbbreviation".
      */
     @Test
     public void testWordToAbbreviation() {
@@ -185,7 +180,7 @@ public class TransformationTest {
     }
 
     /**
-     * Test transformacji "numberToText", z klasy Transformation.
+     * Test dekoratora "numberToText".
      */
     @Test
     public void testNumberToText() {
@@ -198,40 +193,46 @@ public class TransformationTest {
     }
     
     /**
-     * Test transformacji "addDot", z klasy Transformation.
+     * Test dekoratora "addDot".
      */
     @Test
     public void testAddDot() {
         String text = "Mam na imię Mariusz";
         String expResult = "Mam na imię Mariusz.";
-        String result = Transformation.addDot(text);
+
+        mock = new AddDotDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
     
     /**
-     * Test transformacji "eliminate", z klasy Transformation.
+     * Test dekoratora "eliminate".
      */
     @Test
     public void testEliminate() {
         String text = "Wyślij do do do mnie wiadomość";
         String expResult = "Wyślij do mnie wiadomość";
-        String result = Transformation.eliminate(text);
+
+        mock = new EliminateDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
     
     /**
-     * Test transformacji "dateToText", z klasy Transformation.
+     * Test dekoratora "dateToText".
      */
     @Test
     public void testDateToText() {
         String text = "W tym tekscie jest data 11.12.18 fajna no nie?";
         String expResult = "W tym tekscie jest data 11 grudnia 2018 fajna no nie?";
-        String result = Transformation.dateToText(text);
+
+        mock = new DateToTextDecorator(mock);
+        String result = mock.transform(text);
         assertEquals(expResult, result);
     }
     
     /**
-     * Test transformacji "correctCity".
+     * Test dekoratora "correctCity".
      */
     @Test
     public void testCorrectCity() {

@@ -18,7 +18,7 @@ public class LowerDecorator extends TransformerDecorator {
      * @param text oryginalny tekst
      * @return tekst, który wszystie litery ma małe
      */
-    public static String lower(String text) {
+    public String lower(String text) {
         return text.toLowerCase();
     }
 }

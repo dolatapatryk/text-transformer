@@ -21,7 +21,7 @@ public class CapitalizeSentencesDecorator extends TransformerDecorator {
      * @return tekst z wielkimi literami na początku każdego zdania
      */
 
-    public static String capitalizeSentences(String text){
+    public String capitalizeSentences(String text){
         String[] sentences = text.split(Pattern.quote(". "));
         for(int i = 0; i < sentences.length-1; i++){
             String[] wordsInSentence = sentences[i].split(" ");

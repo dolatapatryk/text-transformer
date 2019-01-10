@@ -19,7 +19,7 @@ public class NumberToTextDecorator extends TransformerDecorator {
      * @param src oryginalny tekst
      * @return tekst z liczbami zapisanymi jako słowa
      */
-    public static String numberToText(String src) {
+    public String numberToText(String src) {
         StringBuilder dest=new StringBuilder("");
         StringBuilder number=new StringBuilder("");
         boolean num = false, newSent = true, fraction = false;
