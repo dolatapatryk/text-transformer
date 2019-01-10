@@ -33,7 +33,7 @@ public class Transformation {
      * @param dest przetworzony wczesniej tekst, w którym chcemy zachowac wielkosc liter ze źródła
      * @return przetworzony tekst z zachowaniem wielkości liter ze źródła
      */
-    private static String keepLettersSize(String src, String dest) {
+    public static String keepLettersSize(String src, String dest) {
         dest = dest.toLowerCase();
         for(int i = 0; i < src.length(); i++) {
             if(Character.isUpperCase(src.charAt(i))) {
@@ -216,99 +216,6 @@ public class Transformation {
         if(newSentence) word.setCharAt(0, Character.toUpperCase(word.toString().charAt(0)));
         if(fraction) word.append(koncowkaUlamka.toString());
         return word.toString().substring(0, word.toString().length()-1); //Zwraca stringa bez ostatniego znaku - spacji
-    }
-    
-    /**
-     * Metoda dodająca kropkę na końcu zdania
-     * @param text zdanie, które ma zostać zakończone kropką
-     * @return wyrażenie z kropką na końcu
-     */
-    public static String addDot(String text) {
-        StringBuilder result = new StringBuilder(text);
-        if(!text.endsWith("."))
-            result.append(".");
-        text = result.toString();
-        
-        return text;
-    }
-    
-    /**
-     * Metoda eliminująca powtarzające się wyrazy w bezpośrednim sąsiedztwie
-     * @param text Wyrażenie do edycji
-     * @return Wyrażenie bez powtarzających się słów
-     */
-    public static String eliminate(String text) {
-        StringBuilder result=new StringBuilder("");
-        String[] tab = text.split("[ ]+");
-        if(tab.length > 0) {
-            result.append(tab[0]);
-            for(int i = 1; i < tab.length; i++) {
-                if(!tab[i].endsWith(".") &&
-                   !tab[i].endsWith(",") &&
-                   !tab[i].endsWith("!") &&
-                   !tab[i].endsWith("?") &&
-                   !tab[i].endsWith(":") &&
-                   !tab[i].endsWith(";") &&
-                   !tab[i].endsWith("-") &&
-                   !tab[i].endsWith("+")) {
-                    if(!tab[i].toLowerCase().equals(tab[i-1].toLowerCase())) {
-                        result.append(" ");
-                        result.append(tab[i]);
-                    }
-                } else {
-                    if(tab[i].toLowerCase().matches(tab[i-1].toLowerCase()+tab[i].charAt(tab[i].length()-1)))
-                        result.append(tab[i].charAt(tab[i].length()-1));
-                    else {
-                        result.append(" ");
-                        result.append(tab[i]);
-                    }
-                        
-                }
-            }
-        }
-        return result.toString();
-    }
-    
-     /**
-     * Metoda rozpoznająca datę i zapisująca miesiące słownie
-     * @param src oryginalny tekst
-     * @return tekst z datami zapisanymi jako słowa
-     */
-    public static String dateToText(String src) {
-        String result = src;
-        
-        Pattern pattern = Pattern.compile("([0-2][0-9]|(3)[0-1])(\\.)(((0)[0-9])|((1)[0-2]))(\\.)\\d{2,4}");
-        Matcher matcher = pattern.matcher(src);
-        
-        String[] miesiace = {
-            "stycznia",
-            "lutego",
-            "marca",
-            "kwietnia",
-            "maja",
-            "czerwca",
-            "lipa",
-            "sierpnia",
-            "września",
-            "października",
-            "listopada",
-            "grudnia"
-        };
-        
-        
-        
-        String date = "";
-        while (matcher.find()) {
-            String[] parts = matcher.group().split("\\.");
-            if(parts.length == 3){
-                date = parts[0] + " " + miesiace[strToInt(parts[1]) - 1] + " " + parseYear(parts[2]);
-               
-                result = result.replace(matcher.group(),date);
-            }
-            
-        }
-        
-        return result;
     }
     
     /**

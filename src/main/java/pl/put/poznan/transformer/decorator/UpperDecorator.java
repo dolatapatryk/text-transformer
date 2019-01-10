@@ -18,7 +18,7 @@ public class UpperDecorator extends TransformerDecorator {
      * @param text oryginalny tekst
      * @return tekst, który wszystkie litery ma wielkie
      */
-    public static String upper(String text) {
+    public String upper(String text) {
         return text.toUpperCase();
     }
 }

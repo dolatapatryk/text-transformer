@@ -18,7 +18,7 @@ public class CapitalizeDecorator extends TransformerDecorator {
      * @param text - tekst wejsciowy
      * @return tekst, w którym każde słowo zaczyna się wielką literą
      */
-    public static String capitalize(String text){
+    public String capitalize(String text){
         String[] words = text.split(" ");
         text = "";
    

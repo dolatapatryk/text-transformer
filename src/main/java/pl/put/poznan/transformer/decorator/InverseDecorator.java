@@ -1,6 +1,8 @@
 package pl.put.poznan.transformer.decorator;
 
 import pl.put.poznan.transformer.logic.Transformer;
+
+import static pl.put.poznan.transformer.utils.Transformation.keepLettersSize;
 import static pl.put.poznan.transformer.utils.Transformation.reverse;
 
 public class InverseDecorator extends TransformerDecorator {
@@ -19,11 +21,11 @@ public class InverseDecorator extends TransformerDecorator {
      * @param text oryginalny tekst
      * @return odwrócony tekst z zachowanie wielkości liter na pozycjach
      */
-    public static String inverse(String text) {
+    public String inverse(String text) {
         String reverse = reverse(text);
         
-        //String inverse = keepLettersSize(text, reverse);
+        String inverse = keepLettersSize(text, reverse);
         
-        return reverse;
+        return inverse;
     }
 }

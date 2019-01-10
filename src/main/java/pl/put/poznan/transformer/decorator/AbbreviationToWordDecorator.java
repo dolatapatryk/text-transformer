@@ -19,7 +19,7 @@ public class AbbreviationToWordDecorator extends TransformerDecorator {
      * @param src - tekst w którym należy rozwinąć skróty
      * @return tekst z rozwiniętymi skrótami
      */
-    public static String abbreviationToWord(String src){
+    public String abbreviationToWord(String src){
         String[] words = src.split(" ");
 
         String newText = "";

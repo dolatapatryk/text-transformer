@@ -21,7 +21,7 @@ public class WordToAbbreviationDecorator extends TransformerDecorator {
      * @param src - tekst w którym należy znaleźć i zamienić wyrazy na skróty
      * @return tekst ze słowami zwiniętymi w skróty
      */
-    public static String wordToAbbreviation(String src){
+    public String wordToAbbreviation(String src){
         List<String> sentences = new ArrayList<String>();
         sentences.add("między innymi");
         sentences.add("na przykład");

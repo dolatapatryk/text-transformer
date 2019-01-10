@@ -22,7 +22,7 @@ public class AddSpacesAfterDecorator extends TransformerDecorator {
      * @param character - znak, po którym należy wstawiać spacje
      * @return tekst ze spacjami po wyspecyfikowanych znakach
      */
-    public static String addSpacesAfter(String text, char character){
+    public String addSpacesAfter(String text, char character){
         String returnText = "";
         for (int i = 0; i < text.length()-1; i++){
             returnText += text.charAt(i);
