@@ -20,10 +20,7 @@ public @Data class MapKey {
     }
 
     public boolean contains(String key) {
-        if(this.keys.contains(key))
-            return true;
-        else
-            return false;
+        return this.keys.contains(key);
     }
     
     

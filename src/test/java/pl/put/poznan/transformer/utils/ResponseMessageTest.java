@@ -13,11 +13,7 @@ import pl.put.poznan.transformer.logic.OptionModel;
  *
  * @author patryk
  */
-public class ResponseMessageTest {
-    
-    public ResponseMessageTest() {
-    }
-    
+public class ResponseMessageTest {   
 
     /**
      * Test metody objectToJson, z klasy ResponseMessage.
